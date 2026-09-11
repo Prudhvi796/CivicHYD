@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Admin Dashboard | CivicHYD
+    </title>
+
+    <!-- ADMIN LOGIN PROTECTION -->
+    <script>
+        if (localStorage.getItem("adminLoggedIn") !== "true") {
+            window.location.href = "admin-login.html";
+        }
+    </script>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <div class="admin-header">
+
+        <div class="container admin-header-content">
+
+
+            <a href="index.html"
+                class="brand">
+
+                <div class="brand-icon">
+
+                    🏛
+
+                </div>
+
+                <div class="brand-text">
+
+                    <h1>
+                        CivicHYD
+                    </h1>
+
+                    <p>
+                        Administration Portal
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- HEADER BUTTONS -->
+            <div class="admin-header-actions">
+
+
+                <a href="index.html"
+                    class="admin-home-btn">
+
+                    ← Citizen Portal
+
+                </a>
+
+
+                <!-- LOGOUT BUTTON -->
+                <button
+                    id="logoutBtn"
+                    class="admin-home-btn"
+                    type="button">
+
+                    Logout
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <main class="admin-page">
+
+        <div class="container">
+
+
+            <div class="admin-title">
+
+                <div>
+
+                    <span class="section-label">
+
+                        ADMINISTRATION
+
+                    </span>
+
+                    <h1>
+
+                        Civic Issue Management
+
+                    </h1>
+
+                    <p>
+
+                        Monitor and manage citizen reports.
+
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="refreshDashboard"
+                    class="refresh-btn">
+
+                    ↻ Refresh
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- STATS -->
+
+            <div class="admin-stats">
+
+
+                <div class="admin-stat-card">
+
+                    <p>Total Reports</p>
+
+                    <h2 id="adminTotalReports">
+
+                        0
+
+                    </h2>
+
+                </div>
+
+
+                <div class="admin-stat-card">
+
+                    <p>Submitted</p>
+
+                    <h2 id="adminSubmitted">
+
+                        0
+
+                    </h2>
+
+                </div>
+
+
+                <div class="admin-stat-card">
+
+                    <p>Under Review</p>
+
+                    <h2 id="adminReview">
+
+                        0
+
+                    </h2>
+
+                </div>
+
+
+                <div class="admin-stat-card">
+
+                    <p>In Progress</p>
+
+                    <h2 id="adminProgress">
+
+                        0
+
+                    </h2>
+
+                </div>
+
+
+                <div class="admin-stat-card">
+
+                    <p>Resolved</p>
+
+                    <h2 id="adminResolved">
+
+                        0
+
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FILTERS -->
+
+            <div class="admin-filters">
+
+
+                <input
+                    type="text"
+                    id="searchComplaint"
+                    placeholder="Search Complaint ID">
+
+
+                <select id="statusFilter">
+
+                    <option value="All">
+
+                        All Status
+
+                    </option>
+
+                    <option value="Submitted">
+
+                        Submitted
+
+                    </option>
+
+                    <option value="Under Review">
+
+                        Under Review
+
+                    </option>
+
+                    <option value="In Progress">
+
+                        In Progress
+
+                    </option>
+
+                    <option value="Resolved">
+
+                        Resolved
+
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- COMPLAINTS -->
+
+            <div
+                id="adminComplaintsContainer"
+                class="admin-complaints">
+
+            </div>
+
+
+
+            <div
+                id="adminEmptyState"
+                class="admin-empty">
+
+                <div>
+
+                    📭
+
+                </div>
+
+                <h2>
+
+                    No Complaints Found
+
+                </h2>
+
+                <p>
+
+                    Citizen complaints will appear here.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- MAIN JAVASCRIPT -->
+    <script src="script.js"></script>
+
+
+    <!-- LOGOUT FUNCTION -->
+    <script>
+
+        const logoutBtn =
+            document.getElementById(
+                "logoutBtn"
+            );
+
+
+        if (logoutBtn) {
+
+            logoutBtn.addEventListener(
+
+                "click",
+
+                function () {
+
+                    localStorage.removeItem(
+                        "adminLoggedIn"
+                    );
+
+
+                    window.location.href =
+                        "admin-login.html";
+
+                }
+
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

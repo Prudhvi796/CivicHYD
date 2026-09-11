@@ -1,0 +1,473 @@
+:root {
+    --primary: #123d6a;
+    --primary-dark: #082b50;
+    --primary-light: #eaf2f8;
+
+    --text-dark: #172033;
+    --text-light: #64748b;
+
+    --border: #dce3ea;
+    --background: #f5f7fa;
+    --white: #ffffff;
+
+    --green: #15803d;
+    --green-bg: #dcfce7;
+
+    --orange: #c2410c;
+    --orange-bg: #ffedd5;
+
+    --yellow: #a16207;
+    --yellow-bg: #fef9c3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--background);
+    color: var(--text-dark);
+}
+
+.container {
+    width: min(1250px, 92%);
+    margin: auto;
+}
+
+
+/* HEADER */
+
+.admin-header {
+    background: var(--primary-dark);
+    color: white;
+}
+
+.header-content {
+    min-height: 80px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: white;
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    color: var(--primary-dark);
+
+    border-radius: 8px;
+
+    font-size: 24px;
+}
+
+.logo h1 {
+    font-size: 24px;
+}
+
+.logo p {
+    font-size: 11px;
+    opacity: 0.75;
+}
+
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 13px;
+}
+
+.admin-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+
+    padding: 7px 10px;
+    border-radius: 5px;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+
+/* DASHBOARD */
+
+.dashboard {
+    padding: 50px 0 80px;
+}
+
+.dashboard-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 35px;
+}
+
+.section-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.dashboard-heading h2 {
+    font-size: 34px;
+    margin: 8px 0;
+}
+
+.dashboard-heading p {
+    color: var(--text-light);
+}
+
+.home-link {
+    background: white;
+    border: 1px solid var(--border);
+
+    padding: 12px 18px;
+    border-radius: 7px;
+
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* STATS */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.stat-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--primary-light);
+
+    border-radius: 8px;
+}
+
+.stat-card p {
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.stat-card h3 {
+    font-size: 24px;
+    margin-top: 3px;
+}
+
+
+/* MANAGEMENT SECTION */
+
+.management-section {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 30px;
+}
+
+.management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.management-header h2 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.management-header p {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.management-header button {
+    border: none;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 11px 16px;
+
+    border-radius: 6px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* FILTERS */
+
+.filters {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+.filters select,
+.filters input {
+    border: 1px solid var(--border);
+
+    padding: 12px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.filters select {
+    width: 200px;
+}
+
+.filters input {
+    flex: 1;
+}
+
+
+/* COMPLAINT CARD */
+
+.admin-complaint {
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+}
+
+.complaint-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.complaint-id {
+    font-size: 11px;
+    color: var(--text-light);
+
+    margin-bottom: 6px;
+}
+
+.complaint-category {
+    font-size: 18px;
+}
+
+.complaint-date {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.complaint-info {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+    border-top: 1px solid var(--border);
+
+    padding-top: 18px;
+
+    margin-bottom: 20px;
+}
+
+.info-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-light);
+
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 13px;
+}
+
+.admin-actions {
+    border-top: 1px solid var(--border);
+
+    padding-top: 18px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.status-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-group label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-select {
+    border: 1px solid var(--border);
+
+    padding: 9px 12px;
+
+    border-radius: 6px;
+
+    outline: none;
+}
+
+.update-status-btn {
+    border: none;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* EMPTY STATE */
+
+.empty-state {
+    display: none;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    border: 1px dashed var(--border);
+
+    border-radius: 10px;
+}
+
+.empty-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.empty-state h2 {
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 1000px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .header-content,
+    .dashboard-heading,
+    .management-header,
+    .complaint-top,
+    .admin-actions {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filters select {
+        width: 100%;
+    }
+
+    .complaint-info {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-heading h2 {
+        font-size: 27px;
+    }
+
+}

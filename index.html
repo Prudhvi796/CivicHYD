@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CivicHYD | Hyderabad Civic Services</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- LEAFLET MAP -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <div class="gov-bar">
+
+        <div class="container gov-content">
+
+            <div class="gov-left">
+
+                <span class="gov-dot"></span>
+
+                Government Civic Services Portal
+
+            </div>
+
+
+            <div class="gov-right">
+
+                <span>Hyderabad, Telangana</span>
+
+                <a href="#help">Help</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+
+        <div class="container header-content">
+
+
+            <a href="index.html" class="brand">
+
+                <div class="brand-icon">
+                    🏛
+                </div>
+
+                <div class="brand-text">
+
+                    <h1>CivicHYD</h1>
+
+                    <p>Hyderabad Civic Services</p>
+
+                </div>
+
+            </a>
+
+
+            <nav class="navigation">
+
+                <a href="index.html" class="active">
+                    Home
+                </a>
+
+                <a href="report-issue.html">
+                    Report Issue
+                </a>
+
+                <a href="#nearby">
+                    Nearby Issues
+                </a>
+
+                <a href="#track">
+                    Track Complaint
+                </a>
+
+                <a href="my-reports.html">
+                    My Reports
+                </a>
+
+            </nav>
+
+
+            <a href="report-issue.html" class="header-btn">
+
+                Report Issue
+
+            </a>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="container hero-content">
+
+
+            <div class="hero-text">
+
+                <span class="section-label">
+
+                    HYDERABAD CIVIC SERVICES
+
+                </span>
+
+
+                <h1>
+
+                    Report civic issues.<br>
+
+                    Help improve Hyderabad.
+
+                </h1>
+
+
+                <p>
+
+                    CivicHYD helps citizens report civic issues
+                    directly to the concerned authorities and
+                    track their progress.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a href="report-issue.html"
+                        class="primary-btn">
+
+                        📷 Report an Issue
+
+                    </a>
+
+
+                    <a href="#track"
+                        class="secondary-btn">
+
+                        Track Complaint →
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="hero-card">
+
+
+                <div class="hero-card-header">
+
+                    <span>QUICK SERVICES</span>
+
+                </div>
+
+
+                <div class="quick-service">
+
+                    <a href="report-issue.html?category=Roads%20%26%20Potholes">
+
+                        <div>
+
+                            <span class="service-icon">
+                                🛣️
+                            </span>
+
+                            <div>
+
+                                <h3>Road Issues</h3>
+
+                                <p>Potholes and damaged roads</p>
+
+                            </div>
+
+                        </div>
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="quick-service">
+
+                    <a href="report-issue.html?category=Garbage%20%26%20Waste">
+
+                        <div>
+
+                            <span class="service-icon">
+                                🗑️
+                            </span>
+
+                            <div>
+
+                                <h3>Garbage & Waste</h3>
+
+                                <p>Waste collection issues</p>
+
+                            </div>
+
+                        </div>
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="quick-service">
+
+                    <a href="report-issue.html?category=Streetlight%20Issues">
+
+                        <div>
+
+                            <span class="service-icon">
+                                💡
+                            </span>
+
+                            <div>
+
+                                <h3>Streetlights</h3>
+
+                                <p>Broken or damaged lights</p>
+
+                            </div>
+
+                        </div>
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="quick-service">
+
+                    <a href="report-issue.html?category=Water%20Issues">
+
+                        <div>
+
+                            <span class="service-icon">
+                                💧
+                            </span>
+
+                            <div>
+
+                                <h3>Water Issues</h3>
+
+                                <p>Water supply problems</p>
+
+                            </div>
+
+                        </div>
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- STATS -->
+
+    <section class="stats-section">
+
+        <div class="container stats-grid">
+
+
+            <div class="stat-box">
+
+                <h2 id="totalReports">
+                    0
+                </h2>
+
+                <p>
+                    Reports Submitted
+                </p>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <h2 id="resolvedReports">
+                    0
+                </h2>
+
+                <p>
+                    Issues Resolved
+                </p>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <h2 id="progressReports">
+                    0
+                </h2>
+
+                <p>
+                    Currently In Progress
+                </p>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <h2>
+                    24/7
+                </h2>
+
+                <p>
+                    Citizen Reporting
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CATEGORIES -->
+
+    <section class="categories-section">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+
+                    REPORT AN ISSUE
+
+                </span>
+
+                <h2>
+
+                    What would you like to report?
+
+                </h2>
+
+                <p>
+
+                    Select a category to report a civic issue.
+
+                </p>
+
+            </div>
+
+
+            <div class="category-grid">
+
+
+                <a href="report-issue.html?category=Roads%20%26%20Potholes"
+                    class="category-card">
+
+                    <div class="category-icon">
+
+                        🛣️
+
+                    </div>
+
+                    <h3>
+
+                        Roads & Potholes
+
+                    </h3>
+
+                    <p>
+
+                        Damaged roads, potholes and footpaths.
+
+                    </p>
+
+                </a>
+
+
+                <a href="report-issue.html?category=Garbage%20%26%20Waste"
+                    class="category-card">
+
+                    <div class="category-icon">
+
+                        🗑️
+
+                    </div>
+
+                    <h3>
+
+                        Garbage & Waste
+
+                    </h3>
+
+                    <p>
+
+                        Waste collection and garbage issues.
+
+                    </p>
+
+                </a>
+
+
+                <a href="report-issue.html?category=Streetlight%20Issues"
+                    class="category-card">
+
+                    <div class="category-icon">
+
+                        💡
+
+                    </div>
+
+                    <h3>
+
+                        Streetlights
+
+                    </h3>
+
+                    <p>
+
+                        Broken or damaged streetlights.
+
+                    </p>
+
+                </a>
+
+
+                <a href="report-issue.html?category=Water%20Issues"
+                    class="category-card">
+
+                    <div class="category-icon">
+
+                        💧
+
+                    </div>
+
+                    <h3>
+
+                        Water Issues
+
+                    </h3>
+
+                    <p>
+
+                        Water supply and leakage problems.
+
+                    </p>
+
+                </a>
+
+
+                <a href="report-issue.html?category=Drainage%20%26%20Sewage"
+                    class="category-card">
+
+                    <div class="category-icon">
+
+                        🌊
+
+                    </div>
+
+                    <h3>
+
+                        Drainage & Sewage
+
+                    </h3>
+
+                    <p>
+
+                        Drainage blockage and sewage issues.
+
+                    </p>
+
+                </a>
+
+
+                <a href="report-issue.html?category=Other%20Civic%20Issues"
+                    class="category-card">
+
+                    <div class="category-icon">
+
+                        🏙️
+
+                    </div>
+
+                    <h3>
+
+                        Other Issues
+
+                    </h3>
+
+                    <p>
+
+                        Report other civic problems.
+
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- TRACK -->
+
+    <section class="track-section" id="track">
+
+        <div class="container track-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+
+                    TRACK YOUR REPORT
+
+                </span>
+
+                <h2>
+
+                    Track Complaint Status
+
+                </h2>
+
+                <p>
+
+                    Enter your Complaint ID to check the current status.
+
+                </p>
+
+            </div>
+
+
+            <div class="track-box">
+
+
+                <input type="text"
+                    id="trackComplaintId"
+                    placeholder="Example: CIV-2026-123456">
+
+
+                <button id="trackButton">
+
+                    Track Complaint
+
+                </button>
+
+
+            </div>
+
+
+            <div id="trackingResult">
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MAP -->
+
+    <section class="map-section" id="nearby">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+
+                    CITY ISSUE MAP
+
+                </span>
+
+                <h2>
+
+                    Reported Issues in Hyderabad
+
+                </h2>
+
+                <p>
+
+                    View civic issues reported by citizens.
+
+                </p>
+
+            </div>
+
+
+            <div id="civicMap">
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="how-section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+
+                    HOW IT WORKS
+
+                </span>
+
+                <h2>
+
+                    Simple. Fast. Transparent.
+
+                </h2>
+
+            </div>
+
+
+            <div class="how-grid">
+
+
+                <div class="how-card">
+
+                    <span>01</span>
+
+                    <h3>
+
+                        Report Issue
+
+                    </h3>
+
+                    <p>
+
+                        Submit details, location and a photo.
+
+                    </p>
+
+                </div>
+
+
+                <div class="how-card">
+
+                    <span>02</span>
+
+                    <h3>
+
+                        Complaint Generated
+
+                    </h3>
+
+                    <p>
+
+                        Receive a unique Complaint ID.
+
+                    </p>
+
+                </div>
+
+
+                <div class="how-card">
+
+                    <span>03</span>
+
+                    <h3>
+
+                        Track Progress
+
+                    </h3>
+
+                    <p>
+
+                        Follow your complaint until resolution.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <div>
+
+                <h3>
+                    CivicHYD
+                </h3>
+
+                <p>
+                    A smarter way to report civic issues.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <a href="admin-dashboard.html">
+
+                    Admin Dashboard
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </footer>
+
+
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

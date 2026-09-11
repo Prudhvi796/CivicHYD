@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Report Issue | CivicHYD
+    </title>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <!-- TOP BAR -->
+
+    <div class="gov-bar">
+
+        <div class="container gov-content">
+
+            <div class="gov-left">
+
+                <span class="gov-dot"></span>
+
+                Government Civic Services Portal
+
+            </div>
+
+            <div class="gov-right">
+
+                Hyderabad, Telangana
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+
+        <div class="container header-content">
+
+
+            <a href="index.html"
+                class="brand">
+
+                <div class="brand-icon">
+
+                    🏛
+
+                </div>
+
+                <div class="brand-text">
+
+                    <h1>
+                        CivicHYD
+                    </h1>
+
+                    <p>
+                        Hyderabad Civic Services
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <nav class="navigation">
+
+                <a href="index.html">
+
+                    Home
+
+                </a>
+
+                <a href="report-issue.html"
+                    class="active">
+
+                    Report Issue
+
+                </a>
+
+                <a href="index.html#nearby">
+
+                    Nearby Issues
+
+                </a>
+
+                <a href="index.html#track">
+
+                    Track Complaint
+
+                </a>
+
+                <a href="my-reports.html">
+
+                    My Reports
+
+                </a>
+
+            </nav>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- REPORT PAGE -->
+
+    <section class="report-page">
+
+        <div class="container report-container">
+
+
+            <div class="report-page-header">
+
+                <a href="index.html"
+                    class="back-link">
+
+                    ← Back to Home
+
+                </a>
+
+
+                <span class="section-label">
+
+                    CIVIC ISSUE REPORTING
+
+                </span>
+
+
+                <h1>
+
+                    Report a Civic Issue
+
+                </h1>
+
+
+                <p>
+
+                    Provide accurate information to help
+                    authorities identify and resolve the issue.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="report-form-card">
+
+
+                <form id="reportForm">
+
+
+                    <!-- STEP 1 -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <span class="form-step">
+
+                                1
+
+                            </span>
+
+
+                            <div>
+
+                                <h2>
+
+                                    Your Details
+
+                                </h2>
+
+                                <p>
+
+                                    Used to identify your report.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Full Name *
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="citizenName"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Mobile Number *
+
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="mobileNumber"
+                                    placeholder="Enter 10-digit mobile number"
+                                    maxlength="10"
+                                    required>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STEP 2 -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <span class="form-step">
+
+                                2
+
+                            </span>
+
+
+                            <div>
+
+                                <h2>
+
+                                    Issue Details
+
+                                </h2>
+
+                                <p>
+
+                                    Tell us about the civic issue.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Issue Category *
+
+                            </label>
+
+
+                            <select
+                                id="issueCategory"
+                                required>
+
+                                <option value="">
+
+                                    Select category
+
+                                </option>
+
+                                <option value="Roads & Potholes">
+
+                                    Roads & Potholes
+
+                                </option>
+
+                                <option value="Garbage & Waste">
+
+                                    Garbage & Waste
+
+                                </option>
+
+                                <option value="Streetlight Issues">
+
+                                    Streetlight Issues
+
+                                </option>
+
+                                <option value="Water Issues">
+
+                                    Water Issues
+
+                                </option>
+
+                                <option value="Drainage & Sewage">
+
+                                    Drainage & Sewage
+
+                                </option>
+
+                                <option value="Other Civic Issues">
+
+                                    Other Civic Issues
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Describe the Issue *
+
+                            </label>
+
+
+                            <textarea
+                                id="issueDescription"
+                                placeholder="Describe the issue clearly..."
+                                required></textarea>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STEP 3 -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <span class="form-step">
+
+                                3
+
+                            </span>
+
+
+                            <div>
+
+                                <h2>
+
+                                    Issue Location
+
+                                </h2>
+
+                                <p>
+
+                                    Enter the location or use GPS.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="location-box">
+
+
+                            <div class="location-input-group">
+
+                                <input
+                                    type="text"
+                                    id="issueLocation"
+                                    placeholder="Location or coordinates"
+                                    required>
+
+
+                                <button
+                                    type="button"
+                                    id="locationButton"
+                                    class="location-btn">
+
+                                    📍 Use Current Location
+
+                                </button>
+
+                            </div>
+
+
+                            <p id="locationStatus">
+
+                                You can enter the location manually.
+
+                            </p>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STEP 4 -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <span class="form-step">
+
+                                4
+
+                            </span>
+
+
+                            <div>
+
+                                <h2>
+
+                                    Upload Photo
+
+                                </h2>
+
+                                <p>
+
+                                    Optional but recommended.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="photo-upload-box">
+
+                            <input
+                                type="file"
+                                id="issuePhoto"
+                                accept="image/*">
+
+
+                            <div class="upload-content">
+
+                                <div class="upload-icon">
+
+                                    📷
+
+                                </div>
+
+                                <h3>
+
+                                    Upload Issue Photo
+
+                                </h3>
+
+                                <p>
+
+                                    JPG, PNG or WEBP
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="imagePreview"
+                            class="image-preview">
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- SUBMIT -->
+
+                    <div class="submit-section">
+
+                        <p>
+
+                            By submitting, you confirm that
+                            the information provided is accurate.
+
+                        </p>
+
+
+                        <button
+                            type="submit"
+                            class="submit-report-btn">
+
+                            Submit Civic Report →
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+
+            <!-- SUCCESS -->
+
+            <div
+                id="reportSuccess"
+                class="report-success">
+
+
+                <div class="success-icon">
+
+                    ✓
+
+                </div>
+
+
+                <span class="section-label">
+
+                    REPORT SUBMITTED
+
+                </span>
+
+
+                <h2>
+
+                    Your Civic Report Has Been Submitted
+
+                </h2>
+
+
+                <p>
+
+                    Your Complaint ID is:
+
+                </p>
+
+
+                <div id="generatedComplaintId">
+
+                </div>
+
+
+                <p class="success-message">
+
+                    Save this Complaint ID to track
+                    your report.
+
+                </p>
+
+
+                <div class="success-buttons">
+
+
+                    <a href="my-reports.html"
+                        class="success-primary">
+
+                        View My Reports
+
+                    </a>
+
+
+                    <a href="index.html"
+                        class="success-secondary">
+
+                        Back to Home
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        My Reports | CivicHYD
+    </title>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <div class="gov-bar">
+
+        <div class="container gov-content">
+
+            <div class="gov-left">
+
+                <span class="gov-dot"></span>
+
+                Government Civic Services Portal
+
+            </div>
+
+            <div class="gov-right">
+
+                Hyderabad, Telangana
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <header class="main-header">
+
+        <div class="container header-content">
+
+
+            <a href="index.html"
+                class="brand">
+
+                <div class="brand-icon">
+
+                    🏛
+
+                </div>
+
+                <div class="brand-text">
+
+                    <h1>
+                        CivicHYD
+                    </h1>
+
+                    <p>
+                        Hyderabad Civic Services
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <nav class="navigation">
+
+                <a href="index.html">
+
+                    Home
+
+                </a>
+
+                <a href="report-issue.html">
+
+                    Report Issue
+
+                </a>
+
+                <a href="index.html#nearby">
+
+                    Nearby Issues
+
+                </a>
+
+                <a href="index.html#track">
+
+                    Track Complaint
+
+                </a>
+
+                <a href="my-reports.html"
+                    class="active">
+
+                    My Reports
+
+                </a>
+
+            </nav>
+
+
+        </div>
+
+    </header>
+
+
+
+    <section class="my-reports-page">
+
+        <div class="container reports-container">
+
+
+            <div class="reports-page-header">
+
+                <a href="index.html"
+                    class="back-link">
+
+                    ← Back to Home
+
+                </a>
+
+
+                <span class="section-label">
+
+                    CITIZEN REPORTS
+
+                </span>
+
+
+                <h1>
+
+                    My Civic Reports
+
+                </h1>
+
+
+                <p>
+
+                    Enter the mobile number used while
+                    submitting your report.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- SEARCH -->
+
+            <div class="reports-search-card">
+
+                <h2>
+
+                    Find Your Reports
+
+                </h2>
+
+
+                <p>
+
+                    View all reports linked to your mobile number.
+
+                </p>
+
+
+                <div class="mobile-search-box">
+
+                    <input
+                        type="tel"
+                        id="searchMobile"
+                        placeholder="Enter 10-digit mobile number"
+                        maxlength="10">
+
+
+                    <button
+                        id="searchReportsButton">
+
+                        View Reports
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div
+                id="reportsMessage"
+                class="reports-message">
+
+            </div>
+
+
+
+            <div
+                id="reportsList"
+                class="reports-list">
+
+            </div>
+
+
+
+            <!-- EMPTY -->
+
+            <div
+                id="noReports"
+                class="no-reports">
+
+                <div class="no-reports-icon">
+
+                    📋
+
+                </div>
+
+
+                <h2>
+
+                    No Reports Found
+
+                </h2>
+
+
+                <p>
+
+                    No reports were found for this mobile number.
+
+                </p>
+
+
+                <a href="report-issue.html"
+                    class="primary-btn">
+
+                    Report a New Issue
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
