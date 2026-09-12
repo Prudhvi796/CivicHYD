@@ -12,167 +12,626 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+
+/* =========================================
+   MIDDLEWARE
+========================================= */
+
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend files
-app.use(express.static(__dirname));
+app.use(express.json({
+    limit: "10mb"
+}));
 
-// Connect to MongoDB
+app.use(express.urlencoded({
+    extended: true,
+    limit: "10mb"
+}));
+
+
+/* =========================================
+   MONGODB CONNECTION
+========================================= */
+
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("MongoDB Connected Successfully!");
-  })
-  .catch((error) => {
-    console.error("MongoDB Connection Error:", error.message);
-  });
+    .connect(process.env.MONGODB_URI)
+    .then(() => {
 
+        console.log("MongoDB Connected Successfully!");
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("CivicHYD Backend is Running!");
-});
+    })
+    .catch((error) => {
 
+        console.error(
+            "MongoDB Connection Error:",
+            error.message
+        );
 
-// Create a new complaint
-app.post("/api/complaints", async (req, res) => {
-  try {
-    const {
-      name,
-      mobile,
-      category,
-      description,
-      location,
-      image
-    } = req.body;
-
-    // Generate unique complaint ID
-    const complaintId =
-      "CHYD-" +
-      Date.now().toString().slice(-6) +
-      Math.floor(Math.random() * 1000);
-
-    const complaint = new Complaint({
-      complaintId,
-      name,
-      mobile,
-      category,
-      description,
-      location,
-      image: image || ""
     });
 
-    await complaint.save();
 
-    res.status(201).json({
-      success: true,
-      message: "Complaint submitted successfully",
-      complaint
-    });
-
-  } catch (error) {
-    console.error("Complaint Error:", error);
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to submit complaint"
-    });
-  }
-});
+/* =========================================
+   API ROUTES
+========================================= */
 
 
-// Get all complaints
-app.get("/api/complaints", async (req, res) => {
-  try {
-    const complaints = await Complaint.find().sort({
-      createdAt: -1
-    });
+/* CREATE COMPLAINT */
 
-    res.status(200).json({
-      success: true,
-      complaints
-    });
+app.post(
+    "/api/complaints",
+    async (req, res) => {
 
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch complaints"
-    });
-  }
-});
+        try {
+
+            const {
+                name,
+                mobile,
+                category,
+                description,
+                location,
+                image
+            } = req.body;
 
 
-// Get complaint by Complaint ID
-app.get("/api/complaints/:complaintId", async (req, res) => {
-  try {
-    const complaint = await Complaint.findOne({
-      complaintId: req.params.complaintId
-    });
+            /* VALIDATION */
 
-    if (!complaint) {
-      return res.status(404).json({
-        success: false,
-        message: "Complaint not found"
-      });
+            if (
+
+                !name ||
+
+                !mobile ||
+
+                !category ||
+
+                !description ||
+
+                !location
+
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Please fill all required fields."
+
+                });
+
+            }
+
+
+            /* MOBILE VALIDATION */
+
+            if (
+
+                !/^[0-9]{10}$/.test(
+                    mobile
+                )
+
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Invalid mobile number."
+
+                });
+
+            }
+
+
+            /* GENERATE COMPLAINT ID */
+
+            const complaintId =
+
+                "CHYD-" +
+
+                Date.now()
+                    .toString()
+                    .slice(-6) +
+
+                Math.floor(
+                    100 + Math.random() * 900
+                );
+
+
+            /* CREATE COMPLAINT */
+
+            const complaint =
+                new Complaint({
+
+                    complaintId:
+
+                        complaintId,
+
+                    name:
+
+                        name.trim(),
+
+                    mobile:
+
+                        mobile.trim(),
+
+                    category:
+
+                        category,
+
+                    description:
+
+                        description.trim(),
+
+                    location:
+
+                        location.trim(),
+
+                    image:
+
+                        image || "",
+
+                    status:
+
+                        "Submitted"
+
+                });
+
+
+            /* SAVE */
+
+            await complaint.save();
+
+
+            return res.status(201).json({
+
+                success: true,
+
+                message:
+                    "Complaint submitted successfully.",
+
+                complaint:
+
+                    complaint
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Complaint Submission Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to submit complaint."
+
+            });
+
+        }
+
     }
 
-    res.status(200).json({
-      success: true,
-      complaint
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch complaint"
-    });
-  }
-});
+);
 
 
-// Update complaint status
-app.put("/api/complaints/:complaintId", async (req, res) => {
-  try {
-    const { status } = req.body;
+/* =========================================
+   GET ALL COMPLAINTS
+========================================= */
 
-    const complaint = await Complaint.findOneAndUpdate(
-      {
-        complaintId: req.params.complaintId
-      },
-      {
-        status
-      },
-      {
-        new: true
-      }
-    );
+app.get(
+    "/api/complaints",
 
-    if (!complaint) {
-      return res.status(404).json({
-        success: false,
-        message: "Complaint not found"
-      });
+    async (req, res) => {
+
+        try {
+
+            const complaints =
+
+                await Complaint
+                    .find()
+                    .sort({
+
+                        createdAt: -1
+
+                    });
+
+
+            return res.status(200).json({
+
+                success: true,
+
+                complaints:
+
+                    complaints
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Fetch Complaints Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to fetch complaints."
+
+            });
+
+        }
+
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Complaint status updated",
-      complaint
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to update complaint"
-    });
-  }
-});
+);
 
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`CivicHYD server running on http://localhost:${PORT}`);
-});
+/* =========================================
+   GET COMPLAINT BY ID
+========================================= */
+
+app.get(
+    "/api/complaints/:complaintId",
+
+    async (req, res) => {
+
+        try {
+
+            const complaint =
+
+                await Complaint.findOne({
+
+                    complaintId:
+
+                        req.params.complaintId
+
+                });
+
+
+            if (!complaint) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Complaint not found."
+
+                });
+
+            }
+
+
+            return res.status(200).json({
+
+                success: true,
+
+                complaint:
+
+                    complaint
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Complaint Fetch Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to fetch complaint."
+
+            });
+
+        }
+
+    }
+
+);
+
+
+/* =========================================
+   GET COMPLAINTS BY MOBILE NUMBER
+========================================= */
+
+app.get(
+    "/api/complaints/mobile/:mobile",
+
+    async (req, res) => {
+
+        try {
+
+            const mobile =
+                req.params.mobile;
+
+
+            const complaints =
+
+                await Complaint
+                    .find({
+
+                        mobile:
+
+                            mobile
+
+                    })
+                    .sort({
+
+                        createdAt: -1
+
+                    });
+
+
+            return res.status(200).json({
+
+                success: true,
+
+                complaints:
+
+                    complaints
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Mobile Search Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to fetch complaints."
+
+            });
+
+        }
+
+    }
+
+);
+
+
+/* =========================================
+   UPDATE COMPLAINT STATUS
+========================================= */
+
+app.put(
+    "/api/complaints/:complaintId",
+
+    async (req, res) => {
+
+        try {
+
+            const {
+
+                status
+
+            } = req.body;
+
+
+            const validStatuses = [
+
+                "Submitted",
+
+                "Under Review",
+
+                "In Progress",
+
+                "Resolved",
+
+                "Rejected"
+
+            ];
+
+
+            /* VALIDATE STATUS */
+
+            if (
+
+                !validStatuses.includes(
+                    status
+                )
+
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Invalid complaint status."
+
+                });
+
+            }
+
+
+            const complaint =
+
+                await Complaint.findOneAndUpdate(
+
+                    {
+
+                        complaintId:
+
+                            req.params.complaintId
+
+                    },
+
+                    {
+
+                        status:
+
+                            status
+
+                    },
+
+                    {
+
+                        new: true
+
+                    }
+
+                );
+
+
+            if (!complaint) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Complaint not found."
+
+                });
+
+            }
+
+
+            return res.status(200).json({
+
+                success: true,
+
+                message:
+                    "Complaint status updated successfully.",
+
+                complaint:
+
+                    complaint
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Status Update Error:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to update complaint status."
+
+            });
+
+        }
+
+    }
+
+);
+
+
+/* =========================================
+   SERVE FRONTEND
+========================================= */
+
+
+/*
+IMPORTANT:
+
+This serves all your HTML, CSS,
+JavaScript and frontend files.
+*/
+
+
+app.use(
+    express.static(
+        path.join(
+            __dirname
+        )
+    )
+);
+
+
+/* =========================================
+   HOME PAGE
+========================================= */
+
+app.get(
+    "/",
+
+    (req, res) => {
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "index.html"
+            )
+
+        );
+
+    }
+
+);
+
+
+/* =========================================
+   START SERVER
+========================================= */
+
+app.listen(
+    PORT,
+
+    () => {
+
+        console.log(
+            "================================="
+        );
+
+        console.log(
+            "CivicHYD Server Started!"
+        );
+
+        console.log(
+            `http://localhost:${PORT}`
+        );
+
+        console.log(
+            "================================="
+        );
+
+    }
+
+);

@@ -30,7 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         } catch (error) {
 
-            console.error("Error fetching complaints:", error);
+            console.error(
+                "Error fetching complaints:",
+                error
+            );
 
             return [];
 
@@ -48,25 +51,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const response = await fetch(
 
-                API_URL + "/" + complaintId,
+                API_URL +
+                "/" +
+                encodeURIComponent(complaintId),
 
                 {
+
                     method: "PUT",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
                     body: JSON.stringify({
+
                         status: status
+
                     })
+
                 }
 
             );
 
+
             const data =
                 await response.json();
+
 
             return data;
 
@@ -78,7 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             return {
+
                 success: false
+
             };
 
         }
@@ -253,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
+
         /* =========================================
            CATEGORY FROM HOMEPAGE
         ========================================= */
@@ -282,13 +298,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* =========================================
-           LOCATION
+           CURRENT LOCATION
         ========================================= */
 
         if (locationButton) {
 
             locationButton.addEventListener(
+
                 "click",
+
                 function () {
 
                     if (
@@ -341,6 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 }
+
             );
 
         }
@@ -357,7 +376,9 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             issuePhoto.addEventListener(
+
                 "change",
+
                 function () {
 
                     const file =
@@ -365,6 +386,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     if (!file) {
+
+                        imagePreview.innerHTML =
+                            "";
 
                         imagePreview.style.display =
                             "none";
@@ -382,9 +406,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         function (event) {
 
                             imagePreview.innerHTML =
+
                                 '<img src="' +
                                 event.target.result +
-                                '" alt="Issue Preview">';
+                                '" alt="Issue Preview" ' +
+                                'style="max-width:100%; border-radius:10px; margin-top:15px;">';
 
 
                             imagePreview.style.display =
@@ -398,6 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 }
+
             );
 
         }
@@ -405,10 +432,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* =========================================
-           SUBMIT COMPLAINT TO MONGODB
+           SUBMIT COMPLAINT
         ========================================= */
 
         reportForm.addEventListener(
+
             "submit",
 
             async function (event) {
@@ -462,7 +490,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-
                 if (
 
                     !/^[0-9]{10}$/.test(
@@ -482,7 +509,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /* =========================================
-                   SAVE TO DATABASE
+                   SUBMIT FUNCTION
                 ========================================= */
 
                 async function submitComplaint(
@@ -497,6 +524,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 API_URL,
 
                                 {
+
                                     method:
                                         "POST",
 
@@ -526,8 +554,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 location,
 
                                             image:
-                                                imageData ||
-                                                ""
+                                                imageData || ""
 
                                         })
 
@@ -541,13 +568,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         if (
+
                             !response.ok ||
+
                             !data.success
+
                         ) {
 
                             alert(
+
                                 data.message ||
+
                                 "Failed to submit complaint."
+
                             );
 
                             return;
@@ -556,8 +589,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         const complaintId =
-                            data.complaint
-                            .complaintId;
+                            data.complaint.complaintId;
 
 
 
@@ -611,8 +643,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
 
 
-                        /* UPDATE HOME STATS */
-
                         updateHomeStats();
 
 
@@ -648,6 +678,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (
 
                     issuePhoto &&
+
                     issuePhoto.files.length > 0
 
                 ) {
@@ -690,7 +721,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       TRACK COMPLAINT
+       TRACK COMPLAINT BY ID
     ========================================= */
 
     const trackButton =
@@ -728,13 +759,23 @@ document.addEventListener("DOMContentLoaded", function () {
     function createTimeline(status) {
 
 
-        const currentIndex =
+        let currentIndex =
             statusSteps.indexOf(
                 status
             );
 
 
+        if (
+            currentIndex === -1
+        ) {
+
+            currentIndex = 0;
+
+        }
+
+
         let html =
+
             '<div class="track-progress">' +
 
             '<p class="track-progress-title">' +
@@ -748,7 +789,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         statusSteps.forEach(
-            function (step, index) {
+
+            function (
+                step,
+                index
+            ) {
 
 
                 let active =
@@ -802,10 +847,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     '</div>';
 
             }
+
         );
 
 
         html +=
+
             '</div></div>';
 
 
@@ -818,7 +865,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (
 
         trackButton &&
+
         trackInput &&
+
         trackingResult
 
     ) {
@@ -834,12 +883,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 const complaintId =
 
                     trackInput.value
-                    .trim();
+                    .trim()
+                    .toUpperCase();
 
 
                 if (!complaintId) {
 
                     trackingResult.innerHTML =
+
                         "<p>Please enter a Complaint ID.</p>";
 
                     return;
@@ -850,10 +901,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 try {
 
                     const response =
+
                         await fetch(
 
                             API_URL +
+
                             "/" +
+
                             encodeURIComponent(
                                 complaintId
                             )
@@ -862,6 +916,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const data =
+
                         await response.json();
 
 
@@ -870,6 +925,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ) {
 
                         trackingResult.innerHTML =
+
                             "<p>Complaint not found. Check the Complaint ID.</p>";
 
                         return;
@@ -897,6 +953,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '</h3>' +
 
+                        '<p><strong>Complaint ID:</strong> ' +
+
+                        complaint.complaintId +
+
+                        '</p>' +
+
                         '<p>📍 ' +
 
                         complaint.location +
@@ -913,7 +975,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         new Date(
                             complaint.createdAt
-                        ).toLocaleDateString() +
+                        )
+                        .toLocaleDateString() +
 
                         '</p>' +
 
@@ -927,7 +990,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 catch (error) {
 
+                    console.error(
+                        error
+                    );
+
+
                     trackingResult.innerHTML =
+
                         "<p>Unable to connect to server.</p>";
 
                 }
@@ -942,6 +1011,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
        MY REPORTS
+       SEARCH BY MOBILE NUMBER
     ========================================= */
 
     const searchMobile =
@@ -974,10 +1044,13 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
+
     if (
 
         searchMobile &&
+
         searchReportsButton &&
+
         reportsList
 
     ) {
@@ -991,6 +1064,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 const mobile =
+
                     searchMobile.value.trim();
 
 
@@ -1006,6 +1080,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                if (noReports) {
+
+                    noReports.style.display =
+                        "none";
+
+                }
+
+
+
+                /* VALIDATE MOBILE */
 
                 if (
 
@@ -1018,15 +1102,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (reportsMessage) {
 
                         reportsMessage.textContent =
+
                             "Please enter a valid 10-digit mobile number.";
-
-                    }
-
-
-                    if (noReports) {
-
-                        noReports.style.display =
-                            "none";
 
                     }
 
@@ -1035,23 +1112,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                if (reportsMessage) {
+
+                    reportsMessage.textContent =
+                        "Loading your reports...";
+
+                }
+
 
                 const complaints =
                     await getComplaints();
 
 
                 const userReports =
+
                     complaints.filter(
+
                         function (
                             complaint
                         ) {
 
                             return (
+
                                 complaint.mobile ===
                                 mobile
+
                             );
 
                         }
+
                     );
 
 
@@ -1060,6 +1149,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     userReports.length === 0
 
                 ) {
+
+                    if (reportsMessage) {
+
+                        reportsMessage.textContent =
+                            "";
+
+                    }
+
 
                     if (noReports) {
 
@@ -1073,24 +1170,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                if (noReports) {
+                if (reportsMessage) {
 
-                    noReports.style.display =
-                        "none";
+                    reportsMessage.textContent =
+                        "";
 
                 }
 
 
-
                 userReports
+
                     .slice()
+
                     .reverse()
+
                     .forEach(
 
-                        function (report) {
+                        function (
+                            report
+                        ) {
 
 
                             const card =
+
                                 document.createElement(
                                     "div"
                                 );
@@ -1101,6 +1203,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                             const reportDate =
+
                                 report.createdAt ?
 
                                 new Date(
@@ -1161,7 +1264,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                 '</span>' +
 
-                                '</div>';
+                                '</div>' +
+
+                                createTimeline(
+                                    report.status
+                                );
 
 
                             reportsList.appendChild(
@@ -1171,6 +1278,28 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
 
                     );
+
+            }
+
+        );
+
+
+        /* ENTER KEY SUPPORT */
+
+        searchMobile.addEventListener(
+
+            "keypress",
+
+            function (event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    searchReportsButton.click();
+
+                }
 
             }
 
@@ -1225,12 +1354,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        adminContainer.innerHTML =
+
+            '<p style="padding:20px;">Loading complaints...</p>';
+
+
         const complaints =
             await getComplaints();
 
 
 
-        /* STATS */
+        /* =========================================
+           ADMIN STATISTICS
+        ========================================= */
 
         const totalElement =
             document.getElementById(
@@ -1273,10 +1409,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (submittedElement) {
 
             submittedElement.textContent =
+
                 complaints.filter(
+
                     c =>
+
                         c.status ===
                         "Submitted"
+
                 ).length;
 
         }
@@ -1285,10 +1425,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (reviewElement) {
 
             reviewElement.textContent =
+
                 complaints.filter(
+
                     c =>
+
                         c.status ===
                         "Under Review"
+
                 ).length;
 
         }
@@ -1297,10 +1441,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (progressElement) {
 
             progressElement.textContent =
+
                 complaints.filter(
+
                     c =>
+
                         c.status ===
                         "In Progress"
+
                 ).length;
 
         }
@@ -1309,23 +1457,31 @@ document.addEventListener("DOMContentLoaded", function () {
         if (resolvedElement) {
 
             resolvedElement.textContent =
+
                 complaints.filter(
+
                     c =>
+
                         c.status ===
                         "Resolved"
+
                 ).length;
 
         }
 
 
 
-        /* FILTER */
+        /* =========================================
+           FILTERS
+        ========================================= */
 
         const selectedStatus =
 
             statusFilter ?
 
-            statusFilter.value :
+            statusFilter.value
+
+            :
 
             "All";
 
@@ -1344,7 +1500,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         const filtered =
+
             complaints.filter(
+
                 function (
                     complaint
                 ) {
@@ -1362,7 +1520,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     const searchMatch =
 
                         complaint.complaintId
+
                         .toUpperCase()
+
                         .includes(
                             searchValue
                         );
@@ -1377,12 +1537,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 }
+
             );
+
 
 
         adminContainer.innerHTML =
             "";
 
+
+
+        /* =========================================
+           EMPTY STATE
+        ========================================= */
 
         if (
 
@@ -1411,9 +1578,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+        /* =========================================
+           CREATE ADMIN COMPLAINT CARDS
+        ========================================= */
+
         filtered
+
             .slice()
+
             .reverse()
+
             .forEach(
 
                 function (
@@ -1422,6 +1596,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const card =
+
                         document.createElement(
                             "div"
                         );
@@ -1432,6 +1607,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const complaintDate =
+
                         complaint.createdAt ?
 
                         new Date(
@@ -1444,6 +1620,65 @@ document.addEventListener("DOMContentLoaded", function () {
                         "";
 
 
+                    /* =========================================
+                       COMPLAINT IMAGE
+                    ========================================= */
+
+                    let imageHTML =
+                        "";
+
+
+                    if (
+
+                        complaint.image &&
+
+                        complaint.image !== ""
+
+                    ) {
+
+                        imageHTML =
+
+                            '<div class="admin-photo-container">' +
+
+                            '<p class="info-label">' +
+
+                            'ISSUE PHOTO' +
+
+                            '</p>' +
+
+                            '<img ' +
+
+                            'src="' +
+
+                            complaint.image +
+
+                            '" ' +
+
+                            'alt="Complaint Photo" ' +
+
+                            'class="admin-complaint-photo">' +
+
+                            '</div>';
+
+                    }
+
+                    else {
+
+                        imageHTML =
+
+                            '<div class="admin-no-photo">' +
+
+                            '📷 No photo uploaded' +
+
+                            '</div>';
+
+                    }
+
+
+
+                    /* =========================================
+                       COMPLAINT CARD HTML
+                    ========================================= */
 
                     card.innerHTML =
 
@@ -1473,13 +1708,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '</div>' +
 
+
+
                         '<div class="complaint-info">' +
+
 
                         '<div>' +
 
-                        '<p class="info-label">LOCATION</p>' +
+                        '<p class="info-label">' +
 
-                        '<p class="info-value">📍 ' +
+                        'CITIZEN NAME' +
+
+                        '</p>' +
+
+                        '<p class="info-value">' +
+
+                        complaint.name +
+
+                        '</p>' +
+
+                        '</div>' +
+
+
+                        '<div>' +
+
+                        '<p class="info-label">' +
+
+                        'MOBILE NUMBER' +
+
+                        '</p>' +
+
+                        '<p class="info-value">' +
+
+                        complaint.mobile +
+
+                        '</p>' +
+
+                        '</div>' +
+
+
+                        '<div>' +
+
+                        '<p class="info-label">' +
+
+                        'LOCATION' +
+
+                        '</p>' +
+
+                        '<p class="info-value">' +
+
+                        '📍 ' +
 
                         complaint.location +
 
@@ -1487,9 +1765,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '</div>' +
 
+
                         '<div>' +
 
-                        '<p class="info-label">DESCRIPTION</p>' +
+                        '<p class="info-label">' +
+
+                        'DESCRIPTION' +
+
+                        '</p>' +
 
                         '<p class="info-value">' +
 
@@ -1499,7 +1782,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '</div>' +
 
+
                         '</div>' +
+
+
+                        imageHTML +
+
+
 
                         '<div class="admin-actions">' +
 
@@ -1513,14 +1802,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '">' +
 
+
+
                         '<option value="Submitted"' +
 
                         (
 
                             complaint.status ===
-                            "Submitted" ?
+                            "Submitted"
 
-                            " selected" :
+                            ?
+
+                            " selected"
+
+                            :
 
                             ""
 
@@ -1528,14 +1823,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '>Submitted</option>' +
 
+
+
                         '<option value="Under Review"' +
 
                         (
 
                             complaint.status ===
-                            "Under Review" ?
+                            "Under Review"
 
-                            " selected" :
+                            ?
+
+                            " selected"
+
+                            :
 
                             ""
 
@@ -1543,14 +1844,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '>Under Review</option>' +
 
+
+
                         '<option value="In Progress"' +
 
                         (
 
                             complaint.status ===
-                            "In Progress" ?
+                            "In Progress"
 
-                            " selected" :
+                            ?
+
+                            " selected"
+
+                            :
 
                             ""
 
@@ -1558,14 +1865,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '>In Progress</option>' +
 
+
+
                         '<option value="Resolved"' +
 
                         (
 
                             complaint.status ===
-                            "Resolved" ?
+                            "Resolved"
 
-                            " selected" :
+                            ?
+
+                            " selected"
+
+                            :
 
                             ""
 
@@ -1573,9 +1886,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         '>Resolved</option>' +
 
+
+
+                        '<option value="Rejected"' +
+
+                        (
+
+                            complaint.status ===
+                            "Rejected"
+
+                            ?
+
+                            " selected"
+
+                            :
+
+                            ""
+
+                        ) +
+
+                        '>Rejected</option>' +
+
+
+
                         '</select>' +
 
                         '</div>' +
+
+
 
                         '<button class="update-status-btn" data-id="' +
 
@@ -1590,6 +1928,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         '</div>';
 
 
+
                     adminContainer.appendChild(
                         card
                     );
@@ -1600,9 +1939,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-        /* UPDATE STATUS */
+        /* =========================================
+           UPDATE STATUS BUTTONS
+        ========================================= */
 
         const updateButtons =
+
             document.querySelectorAll(
                 ".update-status-btn"
             );
@@ -1627,6 +1969,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         const select =
+
                             document.querySelector(
 
                                 '.status-select[data-id="' +
@@ -1638,11 +1981,27 @@ document.addEventListener("DOMContentLoaded", function () {
                             );
 
 
+                        if (!select) {
+
+                            return;
+
+                        }
+
+
                         const newStatus =
                             select.value;
 
 
+                        this.textContent =
+                            "Updating...";
+
+
+                        this.disabled =
+                            true;
+
+
                         const result =
+
                             await updateComplaintStatus(
 
                                 complaintId,
@@ -1653,7 +2012,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         if (
+
                             result.success
+
                         ) {
 
                             loadAdminDashboard();
@@ -1662,11 +2023,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
+
                         else {
 
                             alert(
+
                                 "Failed to update complaint status."
+
                             );
+
+
+                            this.textContent =
+                                "Update Status";
+
+
+                            this.disabled =
+                                false;
 
                         }
 
@@ -1682,6 +2054,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+    /* =========================================
+       ADMIN FILTER EVENTS
+    ========================================= */
+
     if (statusFilter) {
 
         statusFilter.addEventListener(
@@ -1693,7 +2069,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
     }
-
 
 
     if (searchComplaint) {
@@ -1709,7 +2084,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
     if (refreshDashboard) {
 
         refreshDashboard.addEventListener(
@@ -1721,7 +2095,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
     }
-
 
 
     loadAdminDashboard();
@@ -1742,20 +2115,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         mapElement &&
 
-        typeof L !== "undefined"
+        typeof L !==
+        "undefined"
 
     ) {
 
 
         const map =
+
             L.map(
                 "civicMap"
             )
+
             .setView(
 
                 [
+
                     17.3850,
+
                     78.4867
+
                 ],
 
                 12
@@ -1774,11 +2153,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     19,
 
                 attribution:
+
                     "&copy; OpenStreetMap contributors"
 
             }
 
         )
+
         .addTo(
             map
         );
@@ -1800,7 +2181,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     if (
+
                         !complaint.location
+
                     ) {
 
                         return;
@@ -1809,12 +2192,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const parts =
+
                         complaint.location
                         .split(",");
 
 
                     if (
-                        parts.length !== 2
+
+                        parts.length !==
+                        2
+
                     ) {
 
                         return;
@@ -1823,12 +2210,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const latitude =
+
                         parseFloat(
                             parts[0]
                         );
 
 
                     const longitude =
+
                         parseFloat(
                             parts[1]
                         );
@@ -1881,7 +2270,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         complaint.status +
 
-                        '<br>' +
+                        '<br><br>' +
 
                         '<b>ID:</b> ' +
 

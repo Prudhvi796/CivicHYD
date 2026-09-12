@@ -2375,3 +2375,131 @@ footer a {
     }
 
 }
+/* =========================================
+   ADMIN COMPLAINT IMAGE
+========================================= */
+
+.complaint-image-section {
+
+    margin: 20px 0;
+
+}
+
+
+.complaint-image-label {
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    color: var(--text-light);
+
+    margin-bottom: 8px;
+
+}
+
+
+.admin-complaint-image {
+
+    width: 100%;
+
+    max-width: 450px;
+
+    height: 260px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    border: 1px solid var(--border);
+
+    display: block;
+
+}
+
+
+/* =========================================
+   ADMIN HEADER BUTTONS
+========================================= */
+
+.admin-header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.admin-home-btn {
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    padding: 10px 14px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+}
+
+
+.admin-home-btn:hover {
+
+    background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+/* =========================================
+   MOBILE ADMIN IMAGE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .admin-header-content {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        align-items: flex-start;
+
+    }
+
+
+    .admin-header-actions {
+
+        width: 100%;
+
+    }
+
+
+    .admin-home-btn {
+
+        flex: 1;
+
+        text-align: center;
+
+    }
+
+
+    .admin-complaint-image {
+
+        max-width: 100%;
+
+        height: 220px;
+
+    }
+
+}

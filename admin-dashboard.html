@@ -12,15 +12,32 @@
         Admin Dashboard | CivicHYD
     </title>
 
+
     <!-- ADMIN LOGIN PROTECTION -->
+
     <script>
-        if (localStorage.getItem("adminLoggedIn") !== "true") {
-            window.location.href = "admin-login.html";
+
+        if (
+            localStorage.getItem(
+                "adminLoggedIn"
+            ) !== "true"
+        ) {
+
+            window.location.href =
+                "admin-login.html";
+
         }
+
     </script>
+
+
+    <!-- CSS -->
 
     <link rel="stylesheet"
         href="style.css">
+
+
+    <!-- GOOGLE FONT -->
 
     <link rel="preconnect"
         href="https://fonts.googleapis.com">
@@ -29,19 +46,27 @@
         href="https://fonts.gstatic.com"
         crossorigin>
 
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
 </head>
 
+
 <body>
 
+
+    <!-- =====================================
+         ADMIN HEADER
+    ====================================== -->
 
     <div class="admin-header">
 
         <div class="container admin-header-content">
 
+
+            <!-- LOGO -->
 
             <a href="index.html"
                 class="brand">
@@ -52,14 +77,20 @@
 
                 </div>
 
+
                 <div class="brand-text">
 
                     <h1>
+
                         CivicHYD
+
                     </h1>
 
+
                     <p>
+
                         Administration Portal
+
                     </p>
 
                 </div>
@@ -67,7 +98,9 @@
             </a>
 
 
-            <!-- HEADER BUTTONS -->
+
+            <!-- HEADER ACTIONS -->
+
             <div class="admin-header-actions">
 
 
@@ -79,7 +112,7 @@
                 </a>
 
 
-                <!-- LOGOUT BUTTON -->
+
                 <button
                     id="logoutBtn"
                     class="admin-home-btn"
@@ -99,14 +132,23 @@
 
 
 
+    <!-- =====================================
+         MAIN ADMIN PAGE
+    ====================================== -->
+
     <main class="admin-page">
+
 
         <div class="container">
 
 
+            <!-- PAGE HEADER -->
+
             <div class="admin-title">
 
+
                 <div>
+
 
                     <span class="section-label">
 
@@ -114,24 +156,31 @@
 
                     </span>
 
+
                     <h1>
 
                         Civic Issue Management
 
                     </h1>
 
+
                     <p>
 
-                        Monitor and manage citizen reports.
+                        Monitor citizen complaints,
+                        review evidence and update
+                        complaint status.
 
                     </p>
+
 
                 </div>
 
 
+
                 <button
                     id="refreshDashboard"
-                    class="refresh-btn">
+                    class="refresh-btn"
+                    type="button">
 
                     ↻ Refresh
 
@@ -142,29 +191,24 @@
 
 
 
-            <!-- STATS -->
+            <!-- =====================================
+                 STATISTICS
+            ====================================== -->
 
             <div class="admin-stats">
 
 
                 <div class="admin-stat-card">
 
-                    <p>Total Reports</p>
+                    <p>
 
-                    <h2 id="adminTotalReports">
+                        Total Reports
 
-                        0
-
-                    </h2>
-
-                </div>
+                    </p>
 
 
-                <div class="admin-stat-card">
-
-                    <p>Submitted</p>
-
-                    <h2 id="adminSubmitted">
+                    <h2
+                        id="adminTotalReports">
 
                         0
 
@@ -173,11 +217,18 @@
                 </div>
 
 
+
                 <div class="admin-stat-card">
 
-                    <p>Under Review</p>
+                    <p>
 
-                    <h2 id="adminReview">
+                        Submitted
+
+                    </p>
+
+
+                    <h2
+                        id="adminSubmitted">
 
                         0
 
@@ -186,11 +237,18 @@
                 </div>
 
 
+
                 <div class="admin-stat-card">
 
-                    <p>In Progress</p>
+                    <p>
 
-                    <h2 id="adminProgress">
+                        Under Review
+
+                    </p>
+
+
+                    <h2
+                        id="adminReview">
 
                         0
 
@@ -199,11 +257,38 @@
                 </div>
 
 
+
                 <div class="admin-stat-card">
 
-                    <p>Resolved</p>
+                    <p>
 
-                    <h2 id="adminResolved">
+                        In Progress
+
+                    </p>
+
+
+                    <h2
+                        id="adminProgress">
+
+                        0
+
+                    </h2>
+
+                </div>
+
+
+
+                <div class="admin-stat-card">
+
+                    <p>
+
+                        Resolved
+
+                    </p>
+
+
+                    <h2
+                        id="adminResolved">
 
                         0
 
@@ -216,18 +301,36 @@
 
 
 
-            <!-- FILTERS -->
+            <!-- =====================================
+                 SEARCH AND FILTER
+            ====================================== -->
 
             <div class="admin-filters">
 
 
-                <input
-                    type="text"
-                    id="searchComplaint"
-                    placeholder="Search Complaint ID">
+                <div class="admin-search-box">
 
 
-                <select id="statusFilter">
+                    <span>
+
+                        🔍
+
+                    </span>
+
+
+                    <input
+                        type="text"
+                        id="searchComplaint"
+                        placeholder="Search by Complaint ID">
+
+
+                </div>
+
+
+
+                <select
+                    id="statusFilter">
+
 
                     <option value="All">
 
@@ -235,11 +338,13 @@
 
                     </option>
 
+
                     <option value="Submitted">
 
                         Submitted
 
                     </option>
+
 
                     <option value="Under Review">
 
@@ -247,17 +352,20 @@
 
                     </option>
 
+
                     <option value="In Progress">
 
                         In Progress
 
                     </option>
 
+
                     <option value="Resolved">
 
                         Resolved
 
                     </option>
+
 
                 </select>
 
@@ -266,25 +374,38 @@
 
 
 
-            <!-- COMPLAINTS -->
+            <!-- =====================================
+                 COMPLAINT LIST
+            ====================================== -->
 
             <div
                 id="adminComplaintsContainer"
                 class="admin-complaints">
 
+
+                <!-- Complaints will be added here
+                     dynamically using script.js -->
+
+
             </div>
 
 
+
+            <!-- =====================================
+                 EMPTY STATE
+            ====================================== -->
 
             <div
                 id="adminEmptyState"
                 class="admin-empty">
 
-                <div>
+
+                <div class="admin-empty-icon">
 
                     📭
 
                 </div>
+
 
                 <h2>
 
@@ -292,34 +413,50 @@
 
                 </h2>
 
+
                 <p>
 
-                    Citizen complaints will appear here.
+                    Citizen complaints will appear
+                    here once submitted.
 
                 </p>
+
 
             </div>
 
 
         </div>
 
+
     </main>
 
 
-    <!-- MAIN JAVASCRIPT -->
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
     <script src="script.js"></script>
 
 
-    <!-- LOGOUT FUNCTION -->
+
+    <!-- =====================================
+         LOGOUT
+    ====================================== -->
+
     <script>
 
+
         const logoutBtn =
+
             document.getElementById(
                 "logoutBtn"
             );
 
 
+
         if (logoutBtn) {
+
 
             logoutBtn.addEventListener(
 
@@ -327,19 +464,26 @@
 
                 function () {
 
+
                     localStorage.removeItem(
+
                         "adminLoggedIn"
+
                     );
 
 
                     window.location.href =
+
                         "admin-login.html";
+
 
                 }
 
             );
 
+
         }
+
 
     </script>
 
