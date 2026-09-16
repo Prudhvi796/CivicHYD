@@ -1,493 +1,2696 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>CivicHYD | Command Center</title>
 
-    <title>
-        Admin Dashboard | CivicHYD
-    </title>
+    <!-- Existing CivicHYD stylesheet -->
+    <link rel="stylesheet" href="style.css">
 
+    <style>
+        /* =========================================================
+           CIVICHYD ADMIN COMMAND CENTER
+           Page-specific styles only
+           ========================================================= */
 
-    <!-- ADMIN LOGIN PROTECTION -->
-
-    <script>
-
-        if (
-            localStorage.getItem(
-                "adminLoggedIn"
-            ) !== "true"
-        ) {
-
-            window.location.href =
-                "admin-login.html";
-
+        .admin-command-center {
+            background: #f5f7f9;
+            min-height: 100vh;
         }
 
-    </script>
+        /* ---------- ADMIN HEADER ---------- */
 
+        .admin-header {
+            background: #073b63;
+            color: #fff;
+            padding: 0 28px;
+        }
 
-    <!-- CSS -->
+        .admin-header-inner {
+            max-width: 1400px;
+            min-height: 72px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
 
-    <link rel="stylesheet"
-        href="style.css">
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
+        .admin-brand-icon {
+            width: 42px;
+            height: 42px;
+            border: 2px solid rgba(255,255,255,.7);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-size: 21px;
+        }
 
-    <!-- GOOGLE FONT -->
+        .admin-brand-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
 
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
+        .admin-brand-subtitle {
+            font-size: 11px;
+            opacity: .7;
+            margin-top: 2px;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+        }
 
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+        .admin-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
+        .admin-nav-btn {
+            border: 1px solid rgba(255,255,255,.25);
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        .admin-nav-btn:hover {
+            background: rgba(255,255,255,.16);
+        }
 
+        .admin-logout {
+            background: #fff;
+            color: #073b63;
+        }
+
+        /* ---------- PAGE ---------- */
+
+        .admin-page-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 36px 28px 60px;
+        }
+
+        .admin-page-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .admin-eyebrow {
+            color: #16824b;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 7px;
+        }
+
+        .admin-page-heading h1 {
+            margin: 0;
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.05;
+            color: #17212b;
+        }
+
+        .admin-page-heading p {
+            margin: 9px 0 0;
+            color: #68737d;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        .refresh-btn {
+            border: 1px solid #dfe5e9;
+            background: #fff;
+            color: #073b63;
+            padding: 11px 16px;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .refresh-btn:hover {
+            border-color: #073b63;
+        }
+
+        /* ---------- STATS ---------- */
+
+        .command-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 26px;
+        }
+
+        .command-stat {
+            background: #fff;
+            border: 1px solid #dfe5e9;
+            border-radius: 14px;
+            padding: 21px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-stat::after {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            right: -25px;
+            top: -25px;
+            background: #eef5fa;
+        }
+
+        .command-stat-label {
+            position: relative;
+            z-index: 1;
+            font-size: 12px;
+            color: #68737d;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        .command-stat-value {
+            position: relative;
+            z-index: 1;
+            margin-top: 9px;
+            font-size: 31px;
+            line-height: 1;
+            font-weight: 850;
+            color: #17212b;
+        }
+
+        .command-stat-note {
+            position: relative;
+            z-index: 1;
+            margin-top: 8px;
+            color: #68737d;
+            font-size: 12px;
+        }
+
+        .stat-high .command-stat-value {
+            color: #b42318;
+        }
+
+        .stat-duplicate .command-stat-value {
+            color: #b54708;
+        }
+
+        .stat-cluster .command-stat-value {
+            color: #073b63;
+        }
+
+        /* ---------- INTELLIGENCE SUMMARY ---------- */
+
+        .intelligence-summary {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 26px;
+        }
+
+        .intel-panel {
+            background: #fff;
+            border: 1px solid #dfe5e9;
+            border-radius: 14px;
+            padding: 21px;
+        }
+
+        .intel-panel h3 {
+            margin: 0 0 16px;
+            color: #17212b;
+            font-size: 15px;
+        }
+
+        .intel-bar-row {
+            display: grid;
+            grid-template-columns: 82px 1fr 42px;
+            align-items: center;
+            gap: 9px;
+            margin: 11px 0;
+            font-size: 12px;
+            color: #68737d;
+        }
+
+        .intel-bar {
+            height: 8px;
+            border-radius: 10px;
+            background: #edf1f3;
+            overflow: hidden;
+        }
+
+        .intel-bar span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: #073b63;
+            width: 0;
+            transition: width .4s ease;
+        }
+
+        .intel-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .intel-mini {
+            border: 1px solid #e4e8eb;
+            border-radius: 9px;
+            padding: 13px;
+        }
+
+        .intel-mini-label {
+            font-size: 11px;
+            color: #68737d;
+        }
+
+        .intel-mini-value {
+            margin-top: 5px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #17212b;
+        }
+
+        /* ---------- FILTERS ---------- */
+
+        .admin-controls {
+            background: #fff;
+            border: 1px solid #dfe5e9;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 22px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr) auto;
+            gap: 11px;
+        }
+
+        .admin-control {
+            min-width: 0;
+        }
+
+        .admin-control label {
+            display: block;
+            font-size: 10px;
+            color: #68737d;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            margin-bottom: 6px;
+        }
+
+        .admin-control input,
+        .admin-control select {
+            width: 100%;
+            box-sizing: border-box;
+            height: 43px;
+            border: 1px solid #dfe5e9;
+            background: #fff;
+            border-radius: 8px;
+            padding: 0 12px;
+            font-family: inherit;
+            color: #17212b;
+            outline: none;
+        }
+
+        .admin-control input:focus,
+        .admin-control select:focus {
+            border-color: #073b63;
+        }
+
+        .clear-filter {
+            align-self: end;
+            height: 43px;
+            padding: 0 14px;
+            border: 1px solid #dfe5e9;
+            border-radius: 8px;
+            background: #f5f7f9;
+            cursor: pointer;
+            font-weight: 700;
+            color: #17212b;
+        }
+
+        /* ---------- COMPLAINT LIST HEADER ---------- */
+
+        .complaints-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 13px;
+            gap: 15px;
+        }
+
+        .complaints-header h2 {
+            margin: 0;
+            font-size: 19px;
+            color: #17212b;
+        }
+
+        .results-count {
+            color: #68737d;
+            font-size: 12px;
+        }
+
+        /* ---------- COMPLAINT CARD ---------- */
+
+        .admin-complaints {
+            display: grid;
+            gap: 14px;
+        }
+
+        .admin-complaint-card {
+            background: #fff;
+            border: 1px solid #dfe5e9;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .complaint-main {
+            padding: 20px;
+        }
+
+        .complaint-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .complaint-id-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .complaint-id {
+            font-size: 15px;
+            font-weight: 850;
+            color: #073b63;
+            letter-spacing: .3px;
+        }
+
+        .complaint-date {
+            color: #68737d;
+            font-size: 11px;
+        }
+
+        .complaint-description {
+            margin: 12px 0 0;
+            color: #17212b;
+            line-height: 1.55;
+            font-size: 14px;
+        }
+
+        /* ---------- BADGES ---------- */
+
+        .status-badge,
+        .priority-badge,
+        .intel-badge,
+        .department-badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 25px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            font-size: 10px;
+            line-height: 1;
+            font-weight: 850;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+        }
+
+        .status-submitted {
+            background: #eef5fa;
+            color: #073b63;
+        }
+
+        .status-under-review {
+            background: #fff7e8;
+            color: #9a6700;
+        }
+
+        .status-in-progress {
+            background: #eef5fa;
+            color: #073b63;
+        }
+
+        .status-resolved {
+            background: #eaf7ef;
+            color: #16824b;
+        }
+
+        .status-rejected {
+            background: #fcebea;
+            color: #b42318;
+        }
+
+        .priority-high {
+            background: #fcebea;
+            color: #b42318;
+        }
+
+        .priority-medium {
+            background: #fff7e8;
+            color: #9a6700;
+        }
+
+        .priority-low {
+            background: #edf7f0;
+            color: #16824b;
+        }
+
+        .duplicate-badge {
+            background: #fff3e8;
+            color: #b54708;
+        }
+
+        .cluster-badge {
+            background: #eef5fa;
+            color: #073b63;
+        }
+
+        .department-badge {
+            background: #f3f4f6;
+            color: #344054;
+        }
+
+        /* ---------- INTELLIGENCE ROW ---------- */
+
+        .complaint-intelligence {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 9px;
+            margin-top: 17px;
+        }
+
+        .intelligence-item {
+            border: 1px solid #e7eaed;
+            background: #fafbfc;
+            border-radius: 9px;
+            padding: 12px;
+        }
+
+        .intelligence-item-label {
+            display: block;
+            color: #68737d;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-weight: 750;
+        }
+
+        .intelligence-item-value {
+            display: block;
+            margin-top: 5px;
+            color: #17212b;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .severity-number {
+            font-size: 17px;
+        }
+
+        /* ---------- REASONS ---------- */
+
+        .severity-reasons,
+        .duplicate-info,
+        .cluster-info {
+            margin-top: 12px;
+            padding: 12px 13px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .severity-reasons {
+            background: #f8fafb;
+            border: 1px solid #e7eaed;
+        }
+
+        .duplicate-info {
+            background: #fff9f2;
+            border: 1px solid #f5d8bb;
+        }
+
+        .cluster-info {
+            background: #f3f8fc;
+            border: 1px solid #d9e8f3;
+        }
+
+        .info-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 850;
+            letter-spacing: .7px;
+            margin-bottom: 4px;
+        }
+
+        .severity-reasons .info-title {
+            color: #68737d;
+        }
+
+        .duplicate-info .info-title {
+            color: #b54708;
+        }
+
+        .cluster-info .info-title {
+            color: #073b63;
+        }
+
+        /* ---------- COMPLAINT META ---------- */
+
+        .complaint-meta {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .meta-item {
+            font-size: 12px;
+            color: #68737d;
+        }
+
+        .meta-item strong {
+            display: block;
+            margin-top: 3px;
+            color: #17212b;
+            font-size: 12px;
+        }
+
+        /* ---------- CARD ACTIONS ---------- */
+
+        .complaint-actions {
+            background: #fafbfc;
+            border-top: 1px solid #e7eaed;
+            padding: 13px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .status-update-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-update-group select {
+            height: 38px;
+            min-width: 170px;
+            border: 1px solid #dfe5e9;
+            background: #fff;
+            border-radius: 8px;
+            padding: 0 10px;
+            font-family: inherit;
+            color: #17212b;
+        }
+
+        .update-status-btn {
+            height: 38px;
+            border: 0;
+            background: #073b63;
+            color: #fff;
+            padding: 0 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 750;
+        }
+
+        .update-status-btn:hover {
+            background: #052b49;
+        }
+
+        .view-photo-btn {
+            border: 1px solid #dfe5e9;
+            background: #fff;
+            color: #073b63;
+            height: 38px;
+            padding: 0 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        /* ---------- EMPTY / LOADING ---------- */
+
+        .admin-state {
+            background: #fff;
+            border: 1px solid #dfe5e9;
+            border-radius: 14px;
+            padding: 50px 25px;
+            text-align: center;
+        }
+
+        .admin-state-icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .admin-state h3 {
+            margin: 0;
+            color: #17212b;
+        }
+
+        .admin-state p {
+            color: #68737d;
+            margin: 7px auto 0;
+            max-width: 450px;
+            line-height: 1.5;
+        }
+
+        /* ---------- PHOTO MODAL ---------- */
+
+        .photo-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.72);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        .photo-modal.active {
+            display: flex;
+        }
+
+        .photo-modal-inner {
+            max-width: 850px;
+            max-height: 90vh;
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px;
+            position: relative;
+        }
+
+        .photo-modal img {
+            display: block;
+            max-width: 100%;
+            max-height: 82vh;
+            border-radius: 8px;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: -13px;
+            right: -13px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: #073b63;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* ---------- TOAST ---------- */
+
+        .admin-toast {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 10000;
+            background: #17212b;
+            color: #fff;
+            padding: 13px 17px;
+            border-radius: 9px;
+            box-shadow: 0 12px 35px rgba(0,0,0,.18);
+            font-size: 13px;
+            font-weight: 650;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: .25s ease;
+        }
+
+        .admin-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .admin-toast.success {
+            background: #16824b;
+        }
+
+        .admin-toast.error {
+            background: #b42318;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+
+        @media (max-width: 1050px) {
+            .command-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .intelligence-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .intelligence-summary .intel-panel:first-child {
+                grid-column: 1 / -1;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .clear-filter {
+                align-self: stretch;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .admin-header {
+                padding: 0 15px;
+            }
+
+            .admin-header-inner {
+                min-height: 65px;
+            }
+
+            .admin-brand-title {
+                font-size: 15px;
+            }
+
+            .admin-brand-subtitle {
+                display: none;
+            }
+
+            .admin-header-actions {
+                gap: 5px;
+            }
+
+            .admin-nav-btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            .admin-page-content {
+                padding: 25px 15px 45px;
+            }
+
+            .admin-page-heading {
+                display: block;
+            }
+
+            .refresh-btn {
+                margin-top: 15px;
+            }
+
+            .command-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .command-stat {
+                padding: 16px;
+            }
+
+            .command-stat-value {
+                font-size: 25px;
+            }
+
+            .intelligence-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .intelligence-summary .intel-panel:first-child {
+                grid-column: auto;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .complaint-intelligence {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .complaint-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .complaint-top {
+                display: block;
+            }
+
+            .complaint-top > div:last-child {
+                margin-top: 12px;
+            }
+
+            .complaint-actions {
+                display: block;
+            }
+
+            .status-update-group {
+                width: 100%;
+            }
+
+            .status-update-group select {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .view-photo-btn {
+                width: 100%;
+                margin-top: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .command-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .complaint-intelligence {
+                grid-template-columns: 1fr;
+            }
+
+            .intel-mini-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
+<!-- =========================================================
+     ADMIN COMMAND CENTER
+     ========================================================= -->
 
-    <!-- =====================================
-         ADMIN HEADER
-    ====================================== -->
+<div class="admin-command-center">
 
-    <div class="admin-header">
+    <!-- HEADER -->
+    <header class="admin-header">
+        <div class="admin-header-inner">
 
-        <div class="container admin-header-content">
-
-
-            <!-- LOGO -->
-
-            <a href="index.html"
-                class="brand">
-
-                <div class="brand-icon">
-
-                    🏛
-
-                </div>
-
-
-                <div class="brand-text">
-
-                    <h1>
-
-                        CivicHYD
-
-                    </h1>
-
-
-                    <p>
-
-                        Administration Portal
-
-                    </p>
-
-                </div>
-
-            </a>
-
-
-
-            <!-- HEADER ACTIONS -->
-
-            <div class="admin-header-actions">
-
-
-                <a href="index.html"
-                    class="admin-home-btn">
-
-                    ← Citizen Portal
-
-                </a>
-
-
-
-                <button
-                    id="logoutBtn"
-                    class="admin-home-btn"
-                    type="button">
-
-                    Logout
-
-                </button>
-
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================
-         MAIN ADMIN PAGE
-    ====================================== -->
-
-    <main class="admin-page">
-
-
-        <div class="container">
-
-
-            <!-- PAGE HEADER -->
-
-            <div class="admin-title">
-
+            <div class="admin-brand">
+                <div class="admin-brand-icon">⌂</div>
 
                 <div>
+                    <div class="admin-brand-title">
+                        CivicHYD
+                    </div>
 
-
-                    <span class="section-label">
-
-                        ADMINISTRATION
-
-                    </span>
-
-
-                    <h1>
-
-                        Civic Issue Management
-
-                    </h1>
-
-
-                    <p>
-
-                        Monitor citizen complaints,
-                        review evidence and update
-                        complaint status.
-
-                    </p>
-
-
+                    <div class="admin-brand-subtitle">
+                        Administration Command Center
+                    </div>
                 </div>
+            </div>
 
-
+            <div class="admin-header-actions">
+                <a href="index.html" class="admin-nav-btn">
+                    Citizen Portal
+                </a>
 
                 <button
-                    id="refreshDashboard"
-                    class="refresh-btn"
-                    type="button">
-
-                    ↻ Refresh
-
+                    type="button"
+                    class="admin-nav-btn admin-logout"
+                    id="adminLogoutButton"
+                >
+                    Logout
                 </button>
-
-
             </div>
 
+        </div>
+    </header>
 
 
-            <!-- =====================================
-                 STATISTICS
-            ====================================== -->
+    <!-- MAIN -->
+    <main class="admin-page-content">
 
-            <div class="admin-stats">
+        <!-- PAGE HEADING -->
+        <section class="admin-page-heading">
 
-
-                <div class="admin-stat-card">
-
-                    <p>
-
-                        Total Reports
-
-                    </p>
-
-
-                    <h2
-                        id="adminTotalReports">
-
-                        0
-
-                    </h2>
-
+            <div>
+                <div class="admin-eyebrow">
+                    Civic Incident Intelligence
                 </div>
 
+                <h1>
+                    Command Center
+                </h1>
 
-
-                <div class="admin-stat-card">
-
-                    <p>
-
-                        Submitted
-
-                    </p>
-
-
-                    <h2
-                        id="adminSubmitted">
-
-                        0
-
-                    </h2>
-
-                </div>
-
-
-
-                <div class="admin-stat-card">
-
-                    <p>
-
-                        Under Review
-
-                    </p>
-
-
-                    <h2
-                        id="adminReview">
-
-                        0
-
-                    </h2>
-
-                </div>
-
-
-
-                <div class="admin-stat-card">
-
-                    <p>
-
-                        In Progress
-
-                    </p>
-
-
-                    <h2
-                        id="adminProgress">
-
-                        0
-
-                    </h2>
-
-                </div>
-
-
-
-                <div class="admin-stat-card">
-
-                    <p>
-
-                        Resolved
-
-                    </p>
-
-
-                    <h2
-                        id="adminResolved">
-
-                        0
-
-                    </h2>
-
-                </div>
-
-
+                <p>
+                    Monitor incoming civic reports, identify high-priority
+                    issues, detect possible duplicates and understand
+                    geographic issue clusters across Hyderabad.
+                </p>
             </div>
 
+            <button
+                type="button"
+                class="refresh-btn"
+                id="refreshDashboard"
+            >
+                ↻ Refresh Data
+            </button>
+
+        </section>
 
 
-            <!-- =====================================
-                 SEARCH AND FILTER
-            ====================================== -->
+        <!-- =====================================================
+             COMMAND STATS
+             ===================================================== -->
 
-            <div class="admin-filters">
+        <section class="command-stats">
+
+            <article class="command-stat">
+                <div class="command-stat-label">
+                    Total Reports
+                </div>
+
+                <div
+                    class="command-stat-value"
+                    id="adminTotalReports"
+                >
+                    0
+                </div>
+
+                <div class="command-stat-note">
+                    All submitted civic issues
+                </div>
+            </article>
 
 
-                <div class="admin-search-box">
+            <article class="command-stat stat-high">
+                <div class="command-stat-label">
+                    High Priority
+                </div>
+
+                <div
+                    class="command-stat-value"
+                    id="adminHighPriority"
+                >
+                    0
+                </div>
+
+                <div class="command-stat-note">
+                    Severity score ≥ 70
+                </div>
+            </article>
 
 
-                    <span>
+            <article class="command-stat stat-duplicate">
+                <div class="command-stat-label">
+                    Possible Duplicates
+                </div>
 
-                        🔍
+                <div
+                    class="command-stat-value"
+                    id="adminDuplicateCount"
+                >
+                    0
+                </div>
 
-                    </span>
+                <div class="command-stat-note">
+                    Reports linked to existing issues
+                </div>
+            </article>
 
+
+            <article class="command-stat stat-cluster">
+                <div class="command-stat-label">
+                    Issue Clusters
+                </div>
+
+                <div
+                    class="command-stat-value"
+                    id="adminClusterCount"
+                >
+                    0
+                </div>
+
+                <div class="command-stat-note">
+                    Nearby related civic issues
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTELLIGENCE SUMMARY
+             ===================================================== -->
+
+        <section class="intelligence-summary">
+
+            <!-- PRIORITY DISTRIBUTION -->
+            <article class="intel-panel">
+
+                <h3>
+                    Priority Distribution
+                </h3>
+
+                <div class="intel-bar-row">
+                    <span>High</span>
+
+                    <div class="intel-bar">
+                        <span id="highPriorityBar"></span>
+                    </div>
+
+                    <strong id="highPriorityCount">
+                        0
+                    </strong>
+                </div>
+
+
+                <div class="intel-bar-row">
+                    <span>Medium</span>
+
+                    <div class="intel-bar">
+                        <span id="mediumPriorityBar"></span>
+                    </div>
+
+                    <strong id="mediumPriorityCount">
+                        0
+                    </strong>
+                </div>
+
+
+                <div class="intel-bar-row">
+                    <span>Low</span>
+
+                    <div class="intel-bar">
+                        <span id="lowPriorityBar"></span>
+                    </div>
+
+                    <strong id="lowPriorityCount">
+                        0
+                    </strong>
+                </div>
+
+            </article>
+
+
+            <!-- STATUS -->
+            <article class="intel-panel">
+
+                <h3>
+                    Workflow Status
+                </h3>
+
+                <div class="intel-mini-grid">
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Submitted
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="statusSubmitted"
+                        >
+                            0
+                        </div>
+                    </div>
+
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Under Review
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="statusReview"
+                        >
+                            0
+                        </div>
+                    </div>
+
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            In Progress
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="statusProgress"
+                        >
+                            0
+                        </div>
+                    </div>
+
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Resolved
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="statusResolved"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- SYSTEM INTELLIGENCE -->
+            <article class="intel-panel">
+
+                <h3>
+                    Intelligence Signals
+                </h3>
+
+                <div class="intel-mini-grid">
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Departments
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="departmentCount"
+                        >
+                            0
+                        </div>
+                    </div>
+
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Categories
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="categoryCount"
+                        >
+                            0
+                        </div>
+                    </div>
+
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Clustered Reports
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="clusteredReportsCount"
+                        >
+                            0
+                        </div>
+                    </div>
+
+
+                    <div class="intel-mini">
+                        <div class="intel-mini-label">
+                            Duplicate Rate
+                        </div>
+
+                        <div
+                            class="intel-mini-value"
+                            id="duplicateRate"
+                        >
+                            0%
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             FILTER / SEARCH CONTROLS
+             ===================================================== -->
+
+        <section class="admin-controls">
+
+            <div class="controls-grid">
+
+                <div class="admin-control">
+                    <label for="adminSearch">
+                        Search
+                    </label>
 
                     <input
                         type="text"
-                        id="searchComplaint"
-                        placeholder="Search by Complaint ID">
-
-
+                        id="adminSearch"
+                        placeholder="Complaint ID, description, mobile..."
+                    >
                 </div>
 
 
+                <div class="admin-control">
+                    <label for="adminStatusFilter">
+                        Status
+                    </label>
 
-                <select
-                    id="statusFilter">
+                    <select id="adminStatusFilter">
+                        <option value="all">
+                            All Statuses
+                        </option>
 
+                        <option value="Submitted">
+                            Submitted
+                        </option>
 
-                    <option value="All">
+                        <option value="Under Review">
+                            Under Review
+                        </option>
 
-                        All Status
+                        <option value="In Progress">
+                            In Progress
+                        </option>
 
-                    </option>
+                        <option value="Resolved">
+                            Resolved
+                        </option>
 
-
-                    <option value="Submitted">
-
-                        Submitted
-
-                    </option>
-
-
-                    <option value="Under Review">
-
-                        Under Review
-
-                    </option>
-
-
-                    <option value="In Progress">
-
-                        In Progress
-
-                    </option>
-
-
-                    <option value="Resolved">
-
-                        Resolved
-
-                    </option>
-
-
-                </select>
-
-
-            </div>
-
-
-
-            <!-- =====================================
-                 COMPLAINT LIST
-            ====================================== -->
-
-            <div
-                id="adminComplaintsContainer"
-                class="admin-complaints">
-
-
-                <!-- Complaints will be added here
-                     dynamically using script.js -->
-
-
-            </div>
-
-
-
-            <!-- =====================================
-                 EMPTY STATE
-            ====================================== -->
-
-            <div
-                id="adminEmptyState"
-                class="admin-empty">
-
-
-                <div class="admin-empty-icon">
-
-                    📭
-
+                        <option value="Rejected">
+                            Rejected
+                        </option>
+                    </select>
                 </div>
 
+
+                <div class="admin-control">
+                    <label for="adminPriorityFilter">
+                        Priority
+                    </label>
+
+                    <select id="adminPriorityFilter">
+
+                        <option value="all">
+                            All Priorities
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="admin-control">
+                    <label for="adminCategoryFilter">
+                        Category
+                    </label>
+
+                    <select id="adminCategoryFilter">
+
+                        <option value="all">
+                            All Categories
+                        </option>
+
+                        <option value="Roads & Potholes">
+                            Roads & Potholes
+                        </option>
+
+                        <option value="Garbage & Waste">
+                            Garbage & Waste
+                        </option>
+
+                        <option value="Streetlights">
+                            Streetlights
+                        </option>
+
+                        <option value="Water Issues">
+                            Water Issues
+                        </option>
+
+                        <option value="Drainage & Sewage">
+                            Drainage & Sewage
+                        </option>
+
+                        <option value="Other Issues">
+                            Other Issues
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="clear-filter"
+                    id="clearAdminFilters"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMPLAINTS
+             ===================================================== -->
+
+        <section>
+
+            <div class="complaints-header">
 
                 <h2>
-
-                    No Complaints Found
-
+                    Civic Reports
                 </h2>
 
-
-                <p>
-
-                    Citizen complaints will appear
-                    here once submitted.
-
-                </p>
-
+                <span
+                    class="results-count"
+                    id="adminResultsCount"
+                >
+                    0 reports
+                </span>
 
             </div>
 
 
-        </div>
+            <div
+                class="admin-complaints"
+                id="adminComplaintsContainer"
+            >
 
+                <div class="admin-state">
+
+                    <div class="admin-state-icon">
+                        ◌
+                    </div>
+
+                    <h3>
+                        Loading civic reports...
+                    </h3>
+
+                    <p>
+                        Connecting to the CivicHYD command center.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </main>
 
+</div>
 
 
-    <!-- =====================================
-         JAVASCRIPT
-    ====================================== -->
+<!-- =========================================================
+     PHOTO MODAL
+     ========================================================= -->
 
-    <script src="script.js"></script>
+<div
+    class="photo-modal"
+    id="photoModal"
+    aria-hidden="true"
+>
+
+    <div class="photo-modal-inner">
+
+        <button
+            type="button"
+            class="photo-modal-close"
+            id="closePhotoModal"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+        <img
+            id="modalPhoto"
+            src=""
+            alt="Complaint evidence"
+        >
+
+    </div>
+
+</div>
 
 
+<!-- TOAST -->
+<div
+    class="admin-toast"
+    id="adminToast"
+></div>
 
-    <!-- =====================================
-         LOGOUT
-    ====================================== -->
 
-    <script>
+<!-- =========================================================
+     ADMIN SCRIPT
+     ========================================================= -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================================
+       CIVICHYD ADMIN COMMAND CENTER
+       ========================================================= */
+
+    if (localStorage.getItem("adminLoggedIn") !== "true") {
+        window.location.href = "admin-login.html";
+        return;
+    }
+
+    const API_URL = "/api/complaints";
+
+    const container =
+        document.getElementById("adminComplaintsContainer");
+
+    const searchInput =
+        document.getElementById("adminSearch");
+
+    const statusFilter =
+        document.getElementById("adminStatusFilter");
+
+    const priorityFilter =
+        document.getElementById("adminPriorityFilter");
+
+    const categoryFilter =
+        document.getElementById("adminCategoryFilter");
+
+    const refreshButton =
+        document.getElementById("refreshDashboard");
+
+    const clearButton =
+        document.getElementById("clearAdminFilters");
+
+    const logoutButton =
+        document.getElementById("adminLogoutButton");
+
+    const photoModal =
+        document.getElementById("photoModal");
+
+    const modalPhoto =
+        document.getElementById("modalPhoto");
+
+    const closePhotoModal =
+        document.getElementById("closePhotoModal");
+
+    const toast =
+        document.getElementById("adminToast");
+
+    let allComplaints = [];
 
 
-        const logoutBtn =
+    /* =========================================================
+       HELPERS
+       ========================================================= */
 
-            document.getElementById(
-                "logoutBtn"
+    function escapeHTML(value) {
+        if (value === null || value === undefined) return "";
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    function formatDate(date) {
+        if (!date) return "—";
+
+        const d = new Date(date);
+
+        if (Number.isNaN(d.getTime())) {
+            return "—";
+        }
+
+        return d.toLocaleString("en-IN", {
+            dateStyle: "medium",
+            timeStyle: "short"
+        });
+    }
+
+
+    function showToast(message, type = "") {
+        if (!toast) return;
+
+        toast.textContent = message;
+        toast.className = "admin-toast show " + type;
+
+        setTimeout(() => {
+            toast.className = "admin-toast";
+        }, 3000);
+    }
+
+
+    function statusClass(status) {
+        return "status-" +
+            String(status || "")
+                .toLowerCase()
+                .replace(/\s+/g, "-");
+    }
+
+
+    function priorityClass(priority) {
+        return "priority-" +
+            String(priority || "low").toLowerCase();
+    }
+
+
+    function safeNumber(value) {
+        const n = Number(value);
+        return Number.isFinite(n) ? n : 0;
+    }
+
+
+    /* =========================================================
+       LOAD COMPLAINTS
+       ========================================================= */
+
+    async function loadComplaints() {
+
+        if (!container) return;
+
+        container.innerHTML = `
+            <div class="admin-state">
+                <div class="admin-state-icon">◌</div>
+                <h3>Loading civic reports...</h3>
+                <p>Fetching the latest reports from CivicHYD.</p>
+            </div>
+        `;
+
+        try {
+
+            const response = await fetch(API_URL);
+
+            if (!response.ok) {
+                throw new Error(
+                    "Server returned " + response.status
+                );
+            }
+
+            const data = await response.json();
+
+            allComplaints =
+                Array.isArray(data)
+                    ? data
+                    : (data.complaints || []);
+
+            updateDashboardStats();
+            applyFilters();
+
+        } catch (error) {
+
+            console.error("Admin dashboard error:", error);
+
+            container.innerHTML = `
+                <div class="admin-state">
+                    <div class="admin-state-icon">⚠</div>
+                    <h3>Unable to load reports</h3>
+                    <p>
+                        Check whether the CivicHYD server is running
+                        and MongoDB is connected.
+                    </p>
+                </div>
+            `;
+
+            showToast(
+                "Unable to connect to CivicHYD server",
+                "error"
             );
+        }
+    }
 
 
+    /* =========================================================
+       DASHBOARD STATS
+       ========================================================= */
 
-        if (logoutBtn) {
+    function updateDashboardStats() {
+
+        const total =
+            allComplaints.length;
+
+        const high =
+            allComplaints.filter(
+                c => c.priority === "High"
+            ).length;
+
+        const duplicateCount =
+            allComplaints.filter(
+                c => c.duplicateOf
+            ).length;
+
+        const clusters =
+            new Set(
+                allComplaints
+                    .map(c => c.clusterId)
+                    .filter(Boolean)
+            ).size;
+
+        setText("adminTotalReports", total);
+        setText("adminHighPriority", high);
+        setText("adminDuplicateCount", duplicateCount);
+        setText("adminClusterCount", clusters);
 
 
-            logoutBtn.addEventListener(
+        /* Priority */
 
-                "click",
+        const highCount =
+            allComplaints.filter(
+                c => c.priority === "High"
+            ).length;
 
-                function () {
+        const mediumCount =
+            allComplaints.filter(
+                c => c.priority === "Medium"
+            ).length;
+
+        const lowCount =
+            allComplaints.filter(
+                c => c.priority === "Low"
+            ).length;
+
+        setText("highPriorityCount", highCount);
+        setText("mediumPriorityCount", mediumCount);
+        setText("lowPriorityCount", lowCount);
+
+        const totalForBars =
+            Math.max(total, 1);
+
+        setWidth(
+            "highPriorityBar",
+            (highCount / totalForBars) * 100
+        );
+
+        setWidth(
+            "mediumPriorityBar",
+            (mediumCount / totalForBars) * 100
+        );
+
+        setWidth(
+            "lowPriorityBar",
+            (lowCount / totalForBars) * 100
+        );
 
 
-                    localStorage.removeItem(
+        /* Status */
 
-                        "adminLoggedIn"
+        setText(
+            "statusSubmitted",
+            countStatus("Submitted")
+        );
 
-                    );
+        setText(
+            "statusReview",
+            countStatus("Under Review")
+        );
+
+        setText(
+            "statusProgress",
+            countStatus("In Progress")
+        );
+
+        setText(
+            "statusResolved",
+            countStatus("Resolved")
+        );
 
 
-                    window.location.href =
+        /* Intelligence */
 
-                        "admin-login.html";
+        const departments =
+            new Set(
+                allComplaints
+                    .map(c => c.department)
+                    .filter(Boolean)
+            ).size;
+
+        const categories =
+            new Set(
+                allComplaints
+                    .map(c => c.category)
+                    .filter(Boolean)
+            ).size;
+
+        const clusteredReports =
+            allComplaints.filter(
+                c => c.clusterId
+            ).length;
+
+        const duplicateRate =
+            total > 0
+                ? Math.round(
+                    (duplicateCount / total) * 100
+                )
+                : 0;
+
+        setText(
+            "departmentCount",
+            departments
+        );
+
+        setText(
+            "categoryCount",
+            categories
+        );
+
+        setText(
+            "clusteredReportsCount",
+            clusteredReports
+        );
+
+        setText(
+            "duplicateRate",
+            duplicateRate + "%"
+        );
+    }
 
 
-                }
+    function setText(id, value) {
 
-            );
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+            element.textContent = value;
+        }
+    }
 
 
+    function setWidth(id, percentage) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+            element.style.width =
+                Math.min(100, Math.max(0, percentage))
+                + "%";
+        }
+    }
+
+
+    function countStatus(status) {
+
+        return allComplaints.filter(
+            c => c.status === status
+        ).length;
+    }
+
+
+    /* =========================================================
+       FILTERING
+       ========================================================= */
+
+    function applyFilters() {
+
+        let filtered =
+            [...allComplaints];
+
+
+        /* Search */
+
+        const search =
+            (searchInput?.value || "")
+                .trim()
+                .toLowerCase();
+
+        if (search) {
+
+            filtered =
+                filtered.filter(c => {
+
+                    const searchable = [
+                        c.complaintId,
+                        c.name,
+                        c.mobile,
+                        c.category,
+                        c.description,
+                        c.location,
+                        c.department,
+                        c.clusterId
+                    ]
+                    .join(" ")
+                    .toLowerCase();
+
+                    return searchable.includes(search);
+                });
         }
 
 
-    </script>
+        /* Status */
+
+        const selectedStatus =
+            statusFilter?.value || "all";
+
+        if (selectedStatus !== "all") {
+
+            filtered =
+                filtered.filter(
+                    c => c.status === selectedStatus
+                );
+        }
 
 
-</body>
+        /* Priority */
 
-</html>
+        const selectedPriority =
+            priorityFilter?.value || "all";
+
+        if (selectedPriority !== "all") {
+
+            filtered =
+                filtered.filter(
+                    c => c.priority === selectedPriority
+                );
+        }
+
+
+        /* Category */
+
+        const selectedCategory =
+            categoryFilter?.value || "all";
+
+        if (selectedCategory !== "all") {
+
+            filtered =
+                filtered.filter(
+                    c => c.category === selectedCategory
+                );
+        }
+
+
+        /* High priority first */
+
+        const priorityWeight = {
+            High: 3,
+            Medium: 2,
+            Low: 1
+        };
+
+        filtered.sort((a, b) => {
+
+            const priorityDifference =
+                (priorityWeight[b.priority] || 0) -
+                (priorityWeight[a.priority] || 0);
+
+            if (priorityDifference !== 0) {
+                return priorityDifference;
+            }
+
+            return new Date(b.createdAt || 0) -
+                   new Date(a.createdAt || 0);
+        });
+
+
+        renderComplaints(filtered);
+    }
+
+
+    /* =========================================================
+       RENDER COMPLAINTS
+       ========================================================= */
+
+    function renderComplaints(complaints) {
+
+        if (!container) return;
+
+        const countElement =
+            document.getElementById("adminResultsCount");
+
+        if (countElement) {
+            countElement.textContent =
+                `${complaints.length} ${
+                    complaints.length === 1
+                        ? "report"
+                        : "reports"
+                }`;
+        }
+
+
+        if (!complaints.length) {
+
+            container.innerHTML = `
+                <div class="admin-state">
+                    <div class="admin-state-icon">⌕</div>
+                    <h3>No reports found</h3>
+                    <p>
+                        Try changing the search or filter options.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            complaints
+                .map(createComplaintCard)
+                .join("");
+    }
+
+
+    /* =========================================================
+       CREATE COMPLAINT CARD
+       ========================================================= */
+
+    function createComplaintCard(complaint) {
+
+        const id =
+            escapeHTML(complaint.complaintId);
+
+        const status =
+            complaint.status || "Submitted";
+
+        const priority =
+            complaint.priority || "Low";
+
+        const score =
+            safeNumber(complaint.severityScore);
+
+        const department =
+            complaint.department ||
+            "Civic General";
+
+        const category =
+            complaint.category ||
+            "Other Issues";
+
+        const description =
+            complaint.description ||
+            "No description provided.";
+
+        const location =
+            complaint.location ||
+            "Location not provided.";
+
+        const duplicate =
+            complaint.duplicateOf;
+
+        const cluster =
+            complaint.clusterId;
+
+        const clusterSize =
+            safeNumber(complaint.clusterSize);
+
+        const reasons =
+            Array.isArray(complaint.severityReasons)
+                ? complaint.severityReasons
+                : [];
+
+        const hasImage =
+            Boolean(complaint.image);
+
+
+        let reasonsHTML = "";
+
+        if (reasons.length) {
+
+            reasonsHTML = `
+                <div class="severity-reasons">
+                    <div class="info-title">
+                        Severity reasoning
+                    </div>
+
+                    ${reasons
+                        .map(
+                            reason =>
+                                `• ${escapeHTML(reason)}`
+                        )
+                        .join("<br>")}
+                </div>
+            `;
+        }
+
+
+        let duplicateHTML = "";
+
+        if (duplicate) {
+
+            duplicateHTML = `
+                <div class="duplicate-info">
+
+                    <div class="info-title">
+                        ⚠ Possible Duplicate
+                    </div>
+
+                    This report may be related to
+                    <strong>
+                        ${escapeHTML(duplicate)}
+                    </strong>
+
+                    ${
+                        complaint.duplicateScore
+                            ? `(${Math.round(
+                                Number(
+                                    complaint.duplicateScore
+                                ) * 100
+                            )}% similarity)`
+                            : ""
+                    }
+
+                    ${
+                        complaint.duplicateReason
+                            ? `<br>${escapeHTML(
+                                complaint.duplicateReason
+                            )}`
+                            : ""
+                    }
+
+                </div>
+            `;
+        }
+
+
+        let clusterHTML = "";
+
+        if (cluster) {
+
+            clusterHTML = `
+                <div class="cluster-info">
+
+                    <div class="info-title">
+                        📍 Geographic Cluster
+                    </div>
+
+                    Cluster
+                    <strong>
+                        ${escapeHTML(cluster)}
+                    </strong>
+
+                    ${
+                        clusterSize > 0
+                            ? `contains approximately
+                               ${clusterSize} nearby report${
+                                   clusterSize === 1
+                                       ? ""
+                                       : "s"
+                               }.`
+                            : "Nearby related reports detected."
+                    }
+
+                </div>
+            `;
+        }
+
+
+        return `
+            <article
+                class="admin-complaint-card"
+                data-id="${id}"
+            >
+
+                <div class="complaint-main">
+
+                    <div class="complaint-top">
+
+                        <div>
+
+                            <div class="complaint-id-row">
+
+                                <span class="complaint-id">
+                                    ${id}
+                                </span>
+
+                                <span class="status-badge ${statusClass(status)}">
+                                    ${escapeHTML(status)}
+                                </span>
+
+                                <span class="priority-badge ${priorityClass(priority)}">
+                                    ${escapeHTML(priority)}
+                                </span>
+
+                                ${
+                                    duplicate
+                                        ? `
+                                            <span class="intel-badge duplicate-badge">
+                                                Duplicate
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+                                ${
+                                    cluster
+                                        ? `
+                                            <span class="intel-badge cluster-badge">
+                                                Cluster
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                            <div class="complaint-date">
+                                Submitted
+                                ${formatDate(
+                                    complaint.createdAt
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        ${
+                            hasImage
+                                ? `
+                                    <button
+                                        type="button"
+                                        class="view-photo-btn"
+                                        data-photo="${escapeHTML(
+                                            complaint.image
+                                        )}"
+                                    >
+                                        View Evidence
+                                    </button>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <p class="complaint-description">
+                        ${escapeHTML(description)}
+                    </p>
+
+
+                    <!-- INTELLIGENCE -->
+
+                    <div class="complaint-intelligence">
+
+                        <div class="intelligence-item">
+
+                            <span class="intelligence-item-label">
+                                Severity
+                            </span>
+
+                            <span class="intelligence-item-value severity-number">
+                                ${score}/100
+                            </span>
+
+                        </div>
+
+
+                        <div class="intelligence-item">
+
+                            <span class="intelligence-item-label">
+                                Department
+                            </span>
+
+                            <span class="intelligence-item-value">
+                                ${escapeHTML(department)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="intelligence-item">
+
+                            <span class="intelligence-item-label">
+                                Category
+                            </span>
+
+                            <span class="intelligence-item-value">
+                                ${escapeHTML(category)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="intelligence-item">
+
+                            <span class="intelligence-item-label">
+                                Cluster
+                            </span>
+
+                            <span class="intelligence-item-value">
+                                ${
+                                    cluster
+                                        ? escapeHTML(cluster)
+                                        : "None detected"
+                                }
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    ${reasonsHTML}
+
+                    ${duplicateHTML}
+
+                    ${clusterHTML}
+
+
+                    <!-- META -->
+
+                    <div class="complaint-meta">
+
+                        <div class="meta-item">
+
+                            Citizen
+
+                            <strong>
+                                ${escapeHTML(
+                                    complaint.name ||
+                                    "Not provided"
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="meta-item">
+
+                            Mobile
+
+                            <strong>
+                                ${escapeHTML(
+                                    complaint.mobile ||
+                                    "Not provided"
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="meta-item">
+
+                            Location
+
+                            <strong>
+                                ${escapeHTML(location)}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="complaint-actions">
+
+                    <div class="status-update-group">
+
+                        <select
+                            class="status-select"
+                            data-id="${id}"
+                        >
+
+                            <option
+                                value="Submitted"
+                                ${status === "Submitted" ? "selected" : ""}
+                            >
+                                Submitted
+                            </option>
+
+                            <option
+                                value="Under Review"
+                                ${status === "Under Review" ? "selected" : ""}
+                            >
+                                Under Review
+                            </option>
+
+                            <option
+                                value="In Progress"
+                                ${status === "In Progress" ? "selected" : ""}
+                            >
+                                In Progress
+                            </option>
+
+                            <option
+                                value="Resolved"
+                                ${status === "Resolved" ? "selected" : ""}
+                            >
+                                Resolved
+                            </option>
+
+                            <option
+                                value="Rejected"
+                                ${status === "Rejected" ? "selected" : ""}
+                            >
+                                Rejected
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="button"
+                            class="update-status-btn"
+                            data-id="${id}"
+                        >
+                            Update Status
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+        `;
+    }
+
+
+    /* =========================================================
+       UPDATE STATUS
+       ========================================================= */
+
+    async function updateComplaintStatus(
+        complaintId,
+        newStatus
+    ) {
+
+        if (!complaintId || !newStatus) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/${encodeURIComponent(
+                        complaintId
+                    )}`,
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            status: newStatus
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json()
+                    .catch(() => ({}));
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to update status"
+                );
+            }
+
+
+            showToast(
+                `Status updated to ${newStatus}`,
+                "success"
+            );
+
+            await loadComplaints();
+
+        } catch (error) {
+
+            console.error(
+                "Status update error:",
+                error
+            );
+
+            showToast(
+                error.message ||
+                "Status update failed",
+                "error"
+            );
+        }
+    }
+
+
+    /* =========================================================
+       EVENT DELEGATION
+       ========================================================= */
+
+    container?.addEventListener(
+        "click",
+        event => {
+
+            const updateButton =
+                event.target.closest(
+                    ".update-status-btn"
+                );
+
+
+            if (updateButton) {
+
+                const complaintId =
+                    updateButton.dataset.id;
+
+                const card =
+                    updateButton.closest(
+                        ".admin-complaint-card"
+                    );
+
+                const select =
+                    card?.querySelector(
+                        ".status-select"
+                    );
+
+                if (!select) return;
+
+                updateComplaintStatus(
+                    complaintId,
+                    select.value
+                );
+
+                return;
+            }
+
+
+            const photoButton =
+                event.target.closest(
+                    ".view-photo-btn"
+                );
+
+
+            if (photoButton) {
+
+                const image =
+                    photoButton.dataset.photo;
+
+                if (!image) return;
+
+                if (modalPhoto) {
+                    modalPhoto.src = image;
+                }
+
+                if (photoModal) {
+
+                    photoModal.classList.add(
+                        "active"
+                    );
+
+                    photoModal.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+                }
+            }
+        }
+    );
+
+
+    /* =========================================================
+       FILTER EVENTS
+       ========================================================= */
+
+    searchInput?.addEventListener(
+        "input",
+        applyFilters
+    );
+
+    statusFilter?.addEventListener(
+        "change",
+        applyFilters
+    );
+
+    priorityFilter?.addEventListener(
+        "change",
+        applyFilters
+    );
+
+    categoryFilter?.addEventListener(
+        "change",
+        applyFilters
+    );
+
+
+    /* =========================================================
+       CLEAR FILTERS
+       ========================================================= */
+
+    clearButton?.addEventListener(
+        "click",
+        () => {
+
+            if (searchInput) {
+                searchInput.value = "";
+            }
+
+            if (statusFilter) {
+                statusFilter.value = "all";
+            }
+
+            if (priorityFilter) {
+                priorityFilter.value = "all";
+            }
+
+            if (categoryFilter) {
+                categoryFilter.value = "all";
+            }
+
+            applyFilters();
+        }
+    );
+
+
+    /* =========================================================
+       REFRESH
+       ========================================================= */
+
+    refreshButton?.addEventListener(
+        "click",
+        async () => {
+
+            refreshButton.disabled = true;
+            refreshButton.textContent =
+                "↻ Refreshing...";
+
+            await loadComplaints();
+
+            refreshButton.disabled = false;
+            refreshButton.textContent =
+                "↻ Refresh Data";
+        }
+    );
+
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    logoutButton?.addEventListener(
+        "click",
+        () => {
+
+            localStorage.removeItem(
+                "adminLoggedIn"
+            );
+
+            window.location.href =
+                "admin-login.html";
+        }
+    );
+
+
+    /* =========================================================
+       PHOTO MODAL
+       ========================================================= */
+
+    function closeModal() {
+
+        if (photoModal) {
+
+            photoModal.classList.remove(
+                "active"
+            );
+
+            photoModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+        }
+
+        if (modalPhoto) {
+            modalPhoto.src = "";
+        }
+    }
+
+
+    closePhotoModal?.addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    photoModal?.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target === photoModal
+            ) {
+                closeModal();
+            }
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        }
+    );
+
+
+    /* =========================================================
+       INITIAL LOAD
+       ========================================================= */
+
+    loadComplaints();
+
+});
+</script>
