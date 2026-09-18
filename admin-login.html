@@ -1,260 +1,1005 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-    <title>Admin Login | CivicHYD</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <link rel="stylesheet" href="style.css">
+  <title>Admin Login | CivicHYD</title>
 
-    <style>
+  <meta
+    name="description"
+    content="CivicHYD administrative access."
+  >
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f4f7fb;
-        }
+  <style>
+    :root {
+      --navy: #102a43;
+      --navy-dark: #0b1f33;
+      --blue: #1f5f95;
+      --gold: #b47b37;
 
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-        }
+      --ink: #17202a;
+      --muted: #66788a;
 
-        .login-card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+      --bg: #f3f5f6;
+      --surface: #ffffff;
+      --border: #d7dde2;
 
-        .login-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+      --red: #9b3030;
+      --red-bg: #fae9e9;
+    }
 
-        .login-logo h1 {
-            margin: 0;
-            color: #123c69;
-            font-size: 32px;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .login-logo p {
-            color: #666;
-            margin-top: 8px;
-        }
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
 
-        .login-card h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+    body {
+      min-height: 100vh;
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+      background: var(--bg);
+      color: var(--ink);
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
+      font-family: Arial, "Segoe UI", sans-serif;
 
-        .form-group input {
-            width: 100%;
-            padding: 13px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-        }
+      display: flex;
+      flex-direction: column;
+    }
 
-        .login-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: #123c69;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .login-btn:hover {
-            opacity: 0.9;
-        }
+    button,
+    input {
+      font: inherit;
+    }
 
-        .error-message {
-            color: #d93025;
-            text-align: center;
-            margin-top: 15px;
-            display: none;
-        }
 
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-        }
+    /* =====================================================
+       TOP GOVERNMENT-STYLE STRIP
+    ====================================================== */
 
-        .back-link a {
-            color: #123c69;
-            text-decoration: none;
-        }
+    .top-strip {
+      height: 34px;
 
-    </style>
+      background: var(--navy-dark);
+      color: #dce5ed;
+
+      font-size: 12px;
+    }
+
+    .top-strip-inner {
+      width: min(1120px, calc(100% - 48px));
+      height: 100%;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+
+      background: #8fc9a5;
+      border-radius: 50%;
+    }
+
+    .top-right {
+      gap: 20px;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    .main-header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      width: min(1120px, calc(100% - 48px));
+      min-height: 76px;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+
+    /* BRAND */
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .brand-mark {
+      position: relative;
+
+      width: 38px;
+      height: 38px;
+
+      border: 2px solid var(--navy);
+      border-radius: 3px;
+
+      overflow: hidden;
+    }
+
+    .brand-arch {
+      position: absolute;
+
+      width: 25px;
+      height: 25px;
+
+      left: 5px;
+      top: 6px;
+
+      border: 2px solid var(--navy);
+      border-bottom: 0;
+
+      border-radius: 18px 18px 0 0;
+    }
+
+    .brand-center {
+      position: absolute;
+
+      width: 5px;
+      height: 13px;
+
+      left: 14px;
+      bottom: 0;
+
+      background: var(--navy);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+
+      line-height: 1;
+    }
+
+    .brand-text strong {
+      color: var(--navy);
+
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+    }
+
+    .brand-text strong span {
+      color: var(--blue);
+    }
+
+    .brand-text small {
+      margin-top: 5px;
+
+      color: #687887;
+
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+
+    /* BACK LINK */
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      color: #536677;
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .back-home:hover {
+      color: var(--navy);
+    }
+
+
+    /* =====================================================
+       CIVIC DIVIDER
+    ====================================================== */
+
+    .civic-divider {
+      height: 3px;
+
+      display: flex;
+    }
+
+    .civic-divider span:nth-child(1) {
+      width: 25%;
+      background: var(--gold);
+    }
+
+    .civic-divider span:nth-child(2) {
+      width: 50%;
+      background: var(--navy);
+    }
+
+    .civic-divider span:nth-child(3) {
+      width: 25%;
+      background: var(--gold);
+    }
+
+
+    /* =====================================================
+       LOGIN AREA
+    ====================================================== */
+
+    .login-page {
+      flex: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 55px 20px 70px;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 430px;
+    }
+
+
+    /* INTRO */
+
+    .login-intro {
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .login-kicker {
+      display: block;
+
+      margin-bottom: 9px;
+
+      color: var(--blue);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .login-intro h1 {
+      margin: 0;
+
+      color: var(--navy);
+
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .login-intro p {
+      margin: 10px auto 0;
+
+      max-width: 350px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+
+    /* =====================================================
+       LOGIN CARD
+    ====================================================== */
+
+    .login-card {
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+
+      box-shadow:
+        0 3px 14px rgba(16, 42, 67, 0.07);
+    }
+
+    .card-header {
+      padding: 21px 24px;
+
+      background: #f5f7f8;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header strong {
+      display: block;
+
+      color: var(--navy);
+
+      font-size: 15px;
+    }
+
+    .card-header span {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+
+    /* FORM */
+
+    .login-form {
+      padding: 25px 24px 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #34495e;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      height: 46px;
+
+      padding: 0 13px;
+
+      color: var(--ink);
+      background: #ffffff;
+
+      border: 1px solid #c5cdd4;
+      border-radius: 3px;
+
+      outline: none;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--blue);
+
+      box-shadow:
+        0 0 0 3px rgba(31, 95, 149, 0.1);
+    }
+
+    .input-wrapper input::placeholder {
+      color: #9aa6b1;
+    }
+
+
+    /* PASSWORD TOGGLE */
+
+    .password-toggle {
+      position: absolute;
+
+      right: 10px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      padding: 4px 6px;
+
+      color: #637383;
+      background: transparent;
+
+      border: 0;
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .password-toggle:hover {
+      color: var(--navy);
+    }
+
+
+    /* SUBMIT */
+
+    .login-button {
+      width: 100%;
+      height: 46px;
+
+      margin-top: 5px;
+
+      color: #ffffff;
+      background: var(--navy);
+
+      border: 1px solid var(--navy);
+      border-radius: 3px;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .login-button:hover {
+      background: var(--navy-dark);
+      transform: translateY(-1px);
+    }
+
+    .login-button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+
+    /* ERROR */
+
+    .login-error {
+      display: none;
+
+      margin-bottom: 17px;
+      padding: 11px 12px;
+
+      color: var(--red);
+      background: var(--red-bg);
+
+      border: 1px solid #e8c7c7;
+
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .login-error.show {
+      display: block;
+    }
+
+
+    /* =====================================================
+       SECURITY NOTE
+    ====================================================== */
+
+    .security-note {
+      margin-top: 16px;
+      padding: 12px 14px;
+
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+
+      background: #f7f8f9;
+      border: 1px solid var(--border);
+    }
+
+    .security-icon {
+      width: 19px;
+      height: 19px;
+
+      flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: #ffffff;
+      background: var(--blue);
+
+      border-radius: 50%;
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .security-note p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ====================================================== */
+
+    .login-footer {
+      padding: 18px 20px;
+
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+
+      text-align: center;
+
+      color: #7a8792;
+
+      font-size: 10px;
+    }
+
+    .login-footer strong {
+      color: var(--navy);
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 650px) {
+
+      .top-strip-inner,
+      .header-inner {
+        width: calc(100% - 32px);
+      }
+
+      .top-right {
+        display: none;
+      }
+
+      .back-home {
+        font-size: 12px;
+      }
+
+      .login-page {
+        padding: 40px 16px 55px;
+      }
+
+    }
+
+
+    @media (max-width: 480px) {
+
+      .brand-text small {
+        display: none;
+      }
+
+      .brand-text strong {
+        font-size: 20px;
+      }
+
+      .brand-mark {
+        width: 35px;
+        height: 35px;
+      }
+
+      .login-intro h1 {
+        font-size: 27px;
+      }
+
+      .card-header,
+      .login-form {
+        padding-left: 19px;
+        padding-right: 19px;
+      }
+
+    }
+
+
+    /* =====================================================
+       ACCESSIBILITY
+    ====================================================== */
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(31, 95, 149, 0.25);
+      outline-offset: 2px;
+    }
+
+  </style>
+
 </head>
 
 <body>
 
-    <div class="login-container">
 
-        <div class="login-card">
+  <!-- =====================================================
+       TOP STRIP
+  ====================================================== -->
 
-            <div class="login-logo">
-                <h1>CivicHYD</h1>
-                <p>Hyderabad Civic Services</p>
-            </div>
+  <div class="top-strip">
 
-            <h2>Admin Login</h2>
+    <div class="top-strip-inner">
 
-            <form id="adminLoginForm">
+      <div class="top-left">
+        <span class="live-dot"></span>
+        <span>Hyderabad, Telangana</span>
+      </div>
 
-                <div class="form-group">
-                    <label>Username</label>
-
-                    <input
-                        type="text"
-                        id="adminUsername"
-                        placeholder="Enter username"
-                        required
-                    >
-                </div>
-
-
-                <div class="form-group">
-                    <label>Password</label>
-
-                    <input
-                        type="password"
-                        id="adminPassword"
-                        placeholder="Enter password"
-                        required
-                    >
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="login-btn"
-                >
-                    Login
-                </button>
-
-                <p
-                    class="error-message"
-                    id="loginError"
-                >
-                    Invalid username or password
-                </p>
-
-            </form>
-
-
-            <div class="back-link">
-
-                <a href="index.html">
-                    ← Back to Home
-                </a>
-
-            </div>
-
-        </div>
+      <div class="top-right">
+        <span>Civic reporting platform</span>
+        <span>Administrative access</span>
+      </div>
 
     </div>
 
-
-    <script>
-
-        const loginForm =
-            document.getElementById(
-                "adminLoginForm"
-            );
+  </div>
 
 
-        loginForm.addEventListener(
-            "submit",
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
 
-            function(event) {
+  <header class="main-header">
 
-                event.preventDefault();
+    <div class="header-inner">
 
+      <a href="index.html" class="brand">
 
-                const username =
-                    document.getElementById(
-                        "adminUsername"
-                    ).value;
+        <div class="brand-mark">
+          <div class="brand-arch"></div>
+          <div class="brand-center"></div>
+        </div>
 
+        <div class="brand-text">
+          <strong>Civic<span>HYD</span></strong>
+          <small>HYDERABAD CIVIC REPORTING</small>
+        </div>
 
-                const password =
-                    document.getElementById(
-                        "adminPassword"
-                    ).value;
-
-
-                /*
-                 College Project Admin Credentials
-                */
-
-                const ADMIN_USERNAME =
-                    "admin";
+      </a>
 
 
-                const ADMIN_PASSWORD =
-                    "civichyd123";
+      <a
+        href="index.html"
+        class="back-home"
+      >
+        <span>←</span>
+        Back to CivicHYD
+      </a>
+
+    </div>
+
+  </header>
 
 
-                if (
+  <!-- =====================================================
+       CIVIC DIVIDER
+  ====================================================== -->
 
-                    username ===
-                    ADMIN_USERNAME
-
-                    &&
-
-                    password ===
-                    ADMIN_PASSWORD
-
-                ) {
-
-                    localStorage.setItem(
-                        "adminLoggedIn",
-                        "true"
-                    );
+  <div class="civic-divider">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
 
-                    window.location.href =
-                        "admin-dashboard.html";
+  <!-- =====================================================
+       LOGIN
+  ====================================================== -->
 
-                }
+  <main class="login-page">
 
-                else {
+    <div class="login-wrapper">
 
-                    document.getElementById(
-                        "loginError"
-                    ).style.display =
-                        "block";
 
-                }
+      <!-- INTRO -->
+
+      <div class="login-intro">
+
+        <span class="login-kicker">
+          ADMINISTRATIVE PORTAL
+        </span>
+
+        <h1>
+          Command Center
+        </h1>
+
+        <p>
+          Sign in to review civic reports, monitor issue
+          intelligence and manage complaint status.
+        </p>
+
+      </div>
+
+
+      <!-- LOGIN CARD -->
+
+      <section class="login-card">
+
+
+        <div class="card-header">
+
+          <strong>
+            Administrator sign in
+          </strong>
+
+          <span>
+            Authorized access only
+          </span>
+
+        </div>
+
+
+        <form
+          id="adminLoginForm"
+          class="login-form"
+        >
+
+
+          <!-- ERROR -->
+
+          <div
+            id="loginError"
+            class="login-error"
+            role="alert"
+          ></div>
+
+
+          <!-- USERNAME -->
+
+          <div class="form-group">
+
+            <label for="adminUsername">
+              Username
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="text"
+                id="adminUsername"
+                name="username"
+                placeholder="Enter administrator username"
+                autocomplete="username"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="adminPassword">
+              Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="password"
+                id="adminPassword"
+                name="password"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                required
+              >
+
+              <button
+                type="button"
+                id="passwordToggle"
+                class="password-toggle"
+              >
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- SUBMIT -->
+
+          <button
+            type="submit"
+            id="adminLoginButton"
+            class="login-button"
+          >
+            Sign in to Command Center
+          </button>
+
+        </form>
+
+      </section>
+
+
+      <!-- SECURITY NOTE -->
+
+      <div class="security-note">
+
+        <div class="security-icon">
+          i
+        </div>
+
+        <p>
+          This portal is intended for authorized
+          administrative use. Do not share administrator
+          credentials with other users.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="login-footer">
+
+    <strong>CivicHYD</strong>
+    · Civic technology prototype
+    · Not an official government service
+
+  </footer>
+
+
+  <!-- =====================================================
+       LOGIN SCRIPT
+  ====================================================== -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const form =
+        document.getElementById("adminLoginForm");
+
+      const username =
+        document.getElementById("adminUsername");
+
+      const password =
+        document.getElementById("adminPassword");
+
+      const loginButton =
+        document.getElementById("adminLoginButton");
+
+      const errorBox =
+        document.getElementById("loginError");
+
+      const passwordToggle =
+        document.getElementById("passwordToggle");
+
+
+      /* -----------------------------------------------
+         PASSWORD SHOW / HIDE
+      ------------------------------------------------ */
+
+      if (passwordToggle) {
+
+        passwordToggle.addEventListener(
+          "click",
+          () => {
+
+            if (password.type === "password") {
+
+              password.type = "text";
+              passwordToggle.textContent = "Hide";
+
+            } else {
+
+              password.type = "password";
+              passwordToggle.textContent = "Show";
 
             }
 
+          }
         );
 
-    </script>
+      }
+
+
+      /* -----------------------------------------------
+         LOGIN
+      ------------------------------------------------ */
+
+      if (form) {
+
+        form.addEventListener(
+          "submit",
+          (event) => {
+
+            event.preventDefault();
+
+            errorBox.classList.remove("show");
+            errorBox.textContent = "";
+
+            const enteredUsername =
+              username.value.trim();
+
+            const enteredPassword =
+              password.value.trim();
+
+
+            if (!enteredUsername || !enteredPassword) {
+
+              errorBox.textContent =
+                "Please enter both username and password.";
+
+              errorBox.classList.add("show");
+
+              return;
+            }
+
+
+            /*
+              Prototype authentication.
+
+              Keep this compatible with the existing
+              admin-dashboard.html flow.
+            */
+
+            const adminUsername = "admin";
+            const adminPassword = "admin123";
+
+
+            if (
+              enteredUsername === adminUsername &&
+              enteredPassword === adminPassword
+            ) {
+
+              localStorage.setItem(
+                "civicAdminLoggedIn",
+                "true"
+              );
+
+              loginButton.disabled = true;
+              loginButton.textContent =
+                "Opening Command Center...";
+
+              window.location.href =
+                "admin-dashboard.html";
+
+            } else {
+
+              errorBox.textContent =
+                "Invalid administrator credentials.";
+
+              errorBox.classList.add("show");
+
+              password.value = "";
+              password.focus();
+
+            }
+
+          }
+        );
+
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>

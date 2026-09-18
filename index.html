@@ -1,36 +1,17 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta
     name="description"
     content="CivicHYD — a civic issue reporting and tracking platform for Hyderabad."
-  />
+  >
 
   <title>CivicHYD | Hyderabad Civic Intelligence</title>
-
-  <!-- Google Font -->
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  />
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  />
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  />
 
   <!-- Leaflet -->
   <link
@@ -38,9 +19,10 @@
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIINfQ3zJjKfG6fM4l0K3M9F0K5X5V5M5F4="
     crossorigin=""
-  />
+  >
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- CivicHYD CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -50,7 +32,6 @@
   ====================================================== -->
 
   <div class="top-strip">
-
     <div class="top-strip-inner">
 
       <div class="location-indicator">
@@ -64,7 +45,6 @@
       </div>
 
     </div>
-
   </div>
 
 
@@ -93,10 +73,7 @@
 
       <nav class="main-nav">
 
-        <a
-          href="index.html"
-          class="active"
-        >
+        <a href="index.html" class="active">
           Home
         </a>
 
@@ -133,16 +110,18 @@
 
 
   <!-- =====================================================
-       HERO
+       MAIN
   ====================================================== -->
 
   <main>
 
+    <!-- ===================================================
+         HERO
+    ==================================================== -->
+
     <section class="hero-section">
 
       <div class="hero-grid">
-
-        <!-- HERO COPY -->
 
         <div class="hero-content">
 
@@ -153,7 +132,7 @@
 
           <h1>
             Your city.
-            <br />
+            <br>
             <em>Your signal.</em>
           </h1>
 
@@ -319,9 +298,9 @@
     </section>
 
 
-    <!-- =====================================================
-         LIVE SNAPSHOT
-    ====================================================== -->
+    <!-- ===================================================
+         CITY SNAPSHOT
+    ==================================================== -->
 
     <section class="snapshot-section">
 
@@ -350,8 +329,6 @@
 
         <div class="snapshot-grid">
 
-          <!-- TOTAL -->
-
           <div class="snapshot-card">
 
             <div class="snapshot-number">
@@ -374,8 +351,6 @@
 
           </div>
 
-
-          <!-- PROGRESS -->
 
           <div class="snapshot-card">
 
@@ -400,8 +375,6 @@
           </div>
 
 
-          <!-- RESOLVED -->
-
           <div class="snapshot-card">
 
             <div class="snapshot-number">
@@ -424,8 +397,6 @@
 
           </div>
 
-
-          <!-- SIGNAL -->
 
           <div class="snapshot-card snapshot-accent">
 
@@ -456,9 +427,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- ===================================================
          REPORT CATEGORIES
-    ====================================================== -->
+    ==================================================== -->
 
     <section class="categories-section">
 
@@ -492,10 +463,7 @@
             href="report-issue.html?category=Roads%20%26%20Potholes"
             class="category-card"
           >
-
-            <span class="category-number">
-              01
-            </span>
+            <span class="category-number">01</span>
 
             <div class="category-icon road-icon">
               ╱╲
@@ -510,10 +478,7 @@
               road conditions.
             </p>
 
-            <span class="category-arrow">
-              →
-            </span>
-
+            <span class="category-arrow">→</span>
           </a>
 
 
@@ -521,10 +486,7 @@
             href="report-issue.html?category=Garbage%20%26%20Waste"
             class="category-card"
           >
-
-            <span class="category-number">
-              02
-            </span>
+            <span class="category-number">02</span>
 
             <div class="category-icon">
               ▱
@@ -539,10 +501,7 @@
               sanitation issues.
             </p>
 
-            <span class="category-arrow">
-              →
-            </span>
-
+            <span class="category-arrow">→</span>
           </a>
 
 
@@ -550,10 +509,7 @@
             href="report-issue.html?category=Streetlights"
             class="category-card"
           >
-
-            <span class="category-number">
-              03
-            </span>
+            <span class="category-number">03</span>
 
             <div class="category-icon">
               ◉
@@ -568,10 +524,7 @@
               electrical civic issues.
             </p>
 
-            <span class="category-arrow">
-              →
-            </span>
-
+            <span class="category-arrow">→</span>
           </a>
 
 
@@ -579,10 +532,7 @@
             href="report-issue.html?category=Water%20Issues"
             class="category-card"
           >
-
-            <span class="category-number">
-              04
-            </span>
+            <span class="category-number">04</span>
 
             <div class="category-icon">
               ≋
@@ -597,10 +547,7 @@
               civic concerns.
             </p>
 
-            <span class="category-arrow">
-              →
-            </span>
-
+            <span class="category-arrow">→</span>
           </a>
 
 
@@ -608,10 +555,7 @@
             href="report-issue.html?category=Drainage%20%26%20Sewage"
             class="category-card"
           >
-
-            <span class="category-number">
-              05
-            </span>
+            <span class="category-number">05</span>
 
             <div class="category-icon">
               ≈
@@ -626,10 +570,7 @@
               sewage problems.
             </p>
 
-            <span class="category-arrow">
-              →
-            </span>
-
+            <span class="category-arrow">→</span>
           </a>
 
 
@@ -637,10 +578,7 @@
             href="report-issue.html?category=Other%20Issues"
             class="category-card category-other"
           >
-
-            <span class="category-number">
-              06
-            </span>
+            <span class="category-number">06</span>
 
             <div class="category-icon">
               +
@@ -655,10 +593,7 @@
               neighbourhood?
             </p>
 
-            <span class="category-arrow">
-              →
-            </span>
-
+            <span class="category-arrow">→</span>
           </a>
 
         </div>
@@ -668,9 +603,9 @@
     </section>
 
 
-    <!-- =====================================================
-         CIVIC INTELLIGENCE EXPLANATION
-    ====================================================== -->
+    <!-- ===================================================
+         CIVIC INTELLIGENCE
+    ==================================================== -->
 
     <section class="intelligence-section">
 
@@ -799,9 +734,9 @@
     </section>
 
 
-    <!-- =====================================================
-         CITY MAP
-    ====================================================== -->
+    <!-- ===================================================
+         CITY ISSUE MAP
+    ==================================================== -->
 
     <section
       class="map-section"
@@ -829,6 +764,7 @@
             </p>
 
           </div>
+
 
           <div class="map-legend">
 
@@ -873,9 +809,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- ===================================================
          TRACK
-    ====================================================== -->
+    ==================================================== -->
 
     <section
       class="track-section"
@@ -901,6 +837,7 @@
               or enter a CivicHYD complaint ID, to see
               the latest status of your report.
             </p>
+
 
             <div class="track-steps">
 
@@ -944,9 +881,7 @@
             </div>
 
 
-            <label
-              for="trackMobileNumber"
-            >
+            <label for="trackMobileNumber">
               Mobile number or complaint ID
             </label>
 
@@ -958,7 +893,7 @@
                 maxlength="30"
                 placeholder="10-digit mobile / CHYD-XXXXXX"
                 autocomplete="off"
-              />
+              >
 
               <button
                 type="button"
@@ -985,9 +920,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- ===================================================
          HOW IT WORKS
-    ====================================================== -->
+    ==================================================== -->
 
     <section
       class="how-section"
@@ -1104,9 +1039,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- ===================================================
          FINAL CTA
-    ====================================================== -->
+    ==================================================== -->
 
     <section class="final-cta">
 
@@ -1185,6 +1120,7 @@
       <div class="footer-links">
 
         <div>
+
           <span>EXPLORE</span>
 
           <a href="index.html">
@@ -1207,6 +1143,7 @@
 
 
         <div>
+
           <span>PORTAL</span>
 
           <a href="#track">
@@ -1254,11 +1191,9 @@
   ></script>
 
 
-  <!-- =====================================================
-       CIVICHYD SCRIPT
-  ====================================================== -->
-
+  <!-- CivicHYD JavaScript -->
   <script src="script.js"></script>
 
 </body>
 </html>
+```

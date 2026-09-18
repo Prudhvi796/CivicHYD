@@ -1,274 +1,784 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
 
-    <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <title>My Reports | CivicHYD</title>
 
-    <title>
-        My Reports | CivicHYD
-    </title>
+  <meta
+    name="description"
+    content="Track civic reports submitted through CivicHYD."
+  >
 
-    <link rel="stylesheet"
-        href="style.css">
+  <link rel="stylesheet" href="my-reports.css">
 
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
 </head>
 
 <body>
 
+  <!-- =====================================================
+       TOP STRIP
+  ====================================================== -->
 
-    <div class="gov-bar">
+  <div class="top-strip">
 
-        <div class="container gov-content">
+    <div class="top-strip-inner">
 
-            <div class="gov-left">
+      <div class="location-indicator">
+        <span class="live-dot"></span>
+        <span>Hyderabad, Telangana</span>
+      </div>
 
-                <span class="gov-dot"></span>
+      <div class="top-strip-right">
+        <span>Civic reporting platform</span>
 
-                Government Civic Services Portal
-
-            </div>
-
-            <div class="gov-right">
-
-                Hyderabad, Telangana
-
-            </div>
-
-        </div>
+        <a href="index.html#how-it-works">
+          How it works
+        </a>
+      </div>
 
     </div>
 
+  </div>
 
 
-    <header class="main-header">
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
 
-        <div class="container header-content">
+  <header class="main-header">
 
+    <div class="nav-container">
 
-            <a href="index.html"
-                class="brand">
+      <a href="index.html" class="brand">
 
-                <div class="brand-icon">
-
-                    🏛
-
-                </div>
-
-                <div class="brand-text">
-
-                    <h1>
-                        CivicHYD
-                    </h1>
-
-                    <p>
-                        Hyderabad Civic Services
-                    </p>
-
-                </div>
-
-            </a>
-
-
-            <nav class="navigation">
-
-                <a href="index.html">
-
-                    Home
-
-                </a>
-
-                <a href="report-issue.html">
-
-                    Report Issue
-
-                </a>
-
-                <a href="index.html#nearby">
-
-                    Nearby Issues
-
-                </a>
-
-                <a href="index.html#track">
-
-                    Track Complaint
-
-                </a>
-
-                <a href="my-reports.html"
-                    class="active">
-
-                    My Reports
-
-                </a>
-
-            </nav>
-
-
+        <div class="brand-mark">
+          <div class="brand-arch"></div>
+          <div class="brand-center"></div>
         </div>
 
-    </header>
-
-
-
-    <section class="my-reports-page">
-
-        <div class="container reports-container">
-
-
-            <div class="reports-page-header">
-
-                <a href="index.html"
-                    class="back-link">
-
-                    ← Back to Home
-
-                </a>
-
-
-                <span class="section-label">
-
-                    CITIZEN REPORTS
-
-                </span>
-
-
-                <h1>
-
-                    My Civic Reports
-
-                </h1>
-
-
-                <p>
-
-                    Enter the mobile number used while
-                    submitting your report.
-
-                </p>
-
-
-            </div>
-
-
-
-            <!-- SEARCH -->
-
-            <div class="reports-search-card">
-
-                <h2>
-
-                    Find Your Reports
-
-                </h2>
-
-
-                <p>
-
-                    View all reports linked to your mobile number.
-
-                </p>
-
-
-                <div class="mobile-search-box">
-
-                    <input
-                        type="tel"
-                        id="searchMobile"
-                        placeholder="Enter 10-digit mobile number"
-                        maxlength="10">
-
-
-                    <button
-                        id="searchReportsButton">
-
-                        View Reports
-
-                    </button>
-
-                </div>
-
-
-            </div>
-
-
-
-            <div
-                id="reportsMessage"
-                class="reports-message">
-
-            </div>
-
-
-
-            <div
-                id="reportsList"
-                class="reports-list">
-
-            </div>
-
-
-
-            <!-- EMPTY -->
-
-            <div
-                id="noReports"
-                class="no-reports">
-
-                <div class="no-reports-icon">
-
-                    📋
-
-                </div>
-
-
-                <h2>
-
-                    No Reports Found
-
-                </h2>
-
-
-                <p>
-
-                    No reports were found for this mobile number.
-
-                </p>
-
-
-                <a href="report-issue.html"
-                    class="primary-btn">
-
-                    Report a New Issue
-
-                </a>
-
-
-            </div>
-
-
+        <div class="brand-text">
+          <strong>Civic<span>HYD</span></strong>
+          <small>HYDERABAD CIVIC REPORTING</small>
         </div>
+
+      </a>
+
+
+      <nav class="main-nav">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="report-issue.html">
+          Report
+        </a>
+
+        <a href="index.html#nearby">
+          City Map
+        </a>
+
+        <a href="index.html#track">
+          Track
+        </a>
+
+        <a
+          href="my-reports.html"
+          class="active"
+        >
+          My Reports
+        </a>
+
+      </nav>
+
+
+      <a
+        href="report-issue.html"
+        class="nav-report-button"
+      >
+        <span>+</span>
+        Report an Issue
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       CIVIC DIVIDER
+  ====================================================== -->
+
+  <div class="civic-divider">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main>
+
+
+    <!-- ===================================================
+         PAGE INTRO
+    ==================================================== -->
+
+    <section class="reports-hero">
+
+      <div class="reports-container">
+
+        <span class="reports-kicker">
+          CITIZEN SERVICES
+        </span>
+
+        <h1>
+          Track a Complaint
+        </h1>
+
+        <p>
+          Check the current status of a civic report and
+          follow its progress from submission to resolution.
+        </p>
+
+      </div>
 
     </section>
 
 
-    <script src="script.js"></script>
+    <!-- ===================================================
+         TRACKING AREA
+    ==================================================== -->
+
+    <section class="reports-section">
+
+      <div class="reports-container">
+
+
+        <!-- ===============================================
+             TRACKING CARD
+        ================================================ -->
+
+        <div class="tracking-card">
+
+          <div class="tracking-card-header">
+
+            <div>
+
+              <span class="tracking-label">
+                REPORT TRACKING
+              </span>
+
+              <h2>
+                Find your report
+              </h2>
+
+            </div>
+
+            <span class="tracking-status">
+              CIVICHYD
+            </span>
+
+          </div>
+
+
+          <!-- =============================================
+               MODE SWITCH
+          ============================================== -->
+
+          <div class="lookup-mode">
+
+            <button
+              type="button"
+              id="mobileModeButton"
+              class="mode-button active"
+            >
+              By Mobile
+            </button>
+
+            <button
+              type="button"
+              id="complaintModeButton"
+              class="mode-button"
+            >
+              By Complaint ID
+            </button>
+
+          </div>
+
+
+          <!-- =============================================
+               MOBILE LOOKUP
+          ============================================== -->
+
+          <form
+            id="mobileLookupForm"
+            class="lookup-form"
+          >
+
+            <div class="lookup-field">
+
+              <label for="lookupMobile">
+                Mobile number
+              </label>
+
+              <input
+                type="tel"
+                id="lookupMobile"
+                name="mobile"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                placeholder="Enter the mobile number used while reporting"
+                autocomplete="tel"
+                required
+              >
+
+            </div>
+
+            <button
+              type="submit"
+              id="lookupButton"
+              class="lookup-button"
+            >
+              Track
+              <span>→</span>
+            </button>
+
+          </form>
+
+
+          <!-- =============================================
+               COMPLAINT ID LOOKUP
+          ============================================== -->
+
+          <form
+            id="complaintLookupForm"
+            class="lookup-form"
+            style="display:none;"
+          >
+
+            <div class="lookup-field">
+
+              <label for="lookupComplaintId">
+                Complaint ID
+              </label>
+
+              <input
+                type="text"
+                id="lookupComplaintId"
+                name="complaintId"
+                placeholder="Example: CHYD-123456-123"
+                autocomplete="off"
+              >
+
+            </div>
+
+            <button
+              type="submit"
+              id="complaintLookupButton"
+              class="lookup-button"
+            >
+              Track
+              <span>→</span>
+            </button>
+
+          </form>
+
+
+          <!-- =============================================
+               MESSAGE
+          ============================================== -->
+
+          <div
+            id="lookupMessage"
+            class="lookup-message"
+          ></div>
+
+
+          <!-- =============================================
+               DEMO TIP
+          ============================================== -->
+
+          <div class="tracking-tip">
+
+            <span class="tip-mark">
+              i
+            </span>
+
+            <p>
+              Use the same mobile number that was entered
+              when the report was submitted.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             LOADING
+        ================================================== -->
+
+        <div
+          id="reportsLoading"
+          class="state-box"
+          style="display:none;"
+        >
+
+          <div class="loading-line"></div>
+
+          <strong>
+            Finding reports...
+          </strong>
+
+          <span>
+            Please wait while CivicHYD checks the records.
+          </span>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+        ================================================== -->
+
+        <div
+          id="reportsError"
+          class="state-box error-state"
+          style="display:none;"
+        >
+
+          <div class="state-symbol">
+            !
+          </div>
+
+          <strong>
+            Unable to find the reports.
+          </strong>
+
+          <span id="reportsErrorMessage">
+            Please check the details and try again.
+          </span>
+
+        </div>
+
+
+        <!-- =================================================
+             EMPTY
+        ================================================== -->
+
+        <div
+          id="reportsEmpty"
+          class="state-box"
+          style="display:none;"
+        >
+
+          <div class="state-symbol">
+            —
+          </div>
+
+          <strong>
+            No reports found.
+          </strong>
+
+          <span>
+            No report matched the information provided.
+          </span>
+
+          <a href="report-issue.html">
+            Report a new issue →
+          </a>
+
+        </div>
+
+
+        <!-- =================================================
+             RESULTS
+        ================================================== -->
+
+        <section
+          id="reportsResults"
+          class="results-section"
+          style="display:none;"
+        >
+
+          <div class="results-header">
+
+            <div>
+
+              <span class="results-label">
+                YOUR REPORTS
+              </span>
+
+              <h2>
+                Report history
+              </h2>
+
+            </div>
+
+            <span
+              id="reportsCount"
+              class="results-count"
+            >
+              0 reports
+            </span>
+
+          </div>
+
+
+          <div
+            id="reportsContainer"
+            class="reports-list"
+          ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             DETAIL VIEW
+        ================================================== -->
+
+        <section
+          id="reportDetailView"
+          class="report-detail"
+          style="display:none;"
+        >
+
+          <button
+            type="button"
+            id="backToReports"
+            class="back-button"
+          >
+            <span>←</span>
+            Back to reports
+          </button>
+
+
+          <div
+            id="reportDetailContainer"
+            class="detail-container"
+          ></div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="main-footer">
+
+    <div class="footer-container">
+
+      <div class="footer-brand">
+
+        <a href="index.html" class="brand">
+
+          <div class="brand-mark">
+            <div class="brand-arch"></div>
+            <div class="brand-center"></div>
+          </div>
+
+          <div class="brand-text">
+            <strong>Civic<span>HYD</span></strong>
+            <small>HYDERABAD CIVIC REPORTING</small>
+          </div>
+
+        </a>
+
+        <p>
+          A civic reporting prototype designed to help
+          organise, track and understand local civic issues
+          in Hyderabad.
+        </p>
+
+        <span class="prototype-note">
+          Student project · Not an official government service
+        </span>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <div>
+
+          <span>EXPLORE</span>
+
+          <a href="index.html">
+            Home
+          </a>
+
+          <a href="index.html#nearby">
+            City Map
+          </a>
+
+          <a href="my-reports.html">
+            My Reports
+          </a>
+
+        </div>
+
+
+        <div>
+
+          <span>REPORT</span>
+
+          <a href="report-issue.html">
+            Report an Issue
+          </a>
+
+          <a href="index.html#track">
+            Track a Report
+          </a>
+
+          <a href="index.html#how-it-works">
+            How it works
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 CivicHYD
+      </span>
+
+      <span>
+        Built as a civic technology prototype
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
+  <script src="script.js"></script>
+
+
+  <!-- =====================================================
+       PAGE-SPECIFIC LOOKUP UI
+  ====================================================== -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const mobileModeButton =
+        document.getElementById(
+          "mobileModeButton"
+        );
+
+      const complaintModeButton =
+        document.getElementById(
+          "complaintModeButton"
+        );
+
+      const mobileForm =
+        document.getElementById(
+          "mobileLookupForm"
+        );
+
+      const complaintForm =
+        document.getElementById(
+          "complaintLookupForm"
+        );
+
+      const lookupMobile =
+        document.getElementById(
+          "lookupMobile"
+        );
+
+      const lookupComplaintId =
+        document.getElementById(
+          "lookupComplaintId"
+        );
+
+
+      /* -----------------------------------------------
+         MOBILE MODE
+      ------------------------------------------------ */
+
+      if (mobileModeButton) {
+
+        mobileModeButton.addEventListener(
+          "click",
+          () => {
+
+            mobileModeButton.classList.add(
+              "active"
+            );
+
+            complaintModeButton.classList.remove(
+              "active"
+            );
+
+            mobileForm.style.display = "flex";
+
+            complaintForm.style.display = "none";
+
+            if (lookupMobile) {
+              lookupMobile.focus();
+            }
+
+          }
+        );
+
+      }
+
+
+      /* -----------------------------------------------
+         COMPLAINT ID MODE
+      ------------------------------------------------ */
+
+      if (complaintModeButton) {
+
+        complaintModeButton.addEventListener(
+          "click",
+          () => {
+
+            complaintModeButton.classList.add(
+              "active"
+            );
+
+            mobileModeButton.classList.remove(
+              "active"
+            );
+
+            mobileForm.style.display = "none";
+
+            complaintForm.style.display = "flex";
+
+            if (lookupComplaintId) {
+              lookupComplaintId.focus();
+            }
+
+          }
+        );
+
+      }
+
+
+      /* -----------------------------------------------
+         MOBILE INPUT
+      ------------------------------------------------ */
+
+      if (lookupMobile) {
+
+        lookupMobile.addEventListener(
+          "input",
+          () => {
+
+            lookupMobile.value =
+              lookupMobile.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
+
+          }
+        );
+
+      }
+
+
+      /* -----------------------------------------------
+         COMPLAINT ID FORMAT
+      ------------------------------------------------ */
+
+      if (lookupComplaintId) {
+
+        lookupComplaintId.addEventListener(
+          "input",
+          () => {
+
+            lookupComplaintId.value =
+              lookupComplaintId.value
+                .toUpperCase()
+                .replace(/\s/g, "");
+
+          }
+        );
+
+      }
+
+
+      /* -----------------------------------------------
+         BACK TO RESULTS
+      ------------------------------------------------ */
+
+      const backButton =
+        document.getElementById(
+          "backToReports"
+        );
+
+      if (backButton) {
+
+        backButton.addEventListener(
+          "click",
+          () => {
+
+            const detail =
+              document.getElementById(
+                "reportDetailView"
+              );
+
+            const results =
+              document.getElementById(
+                "reportsResults"
+              );
+
+            if (detail) {
+              detail.style.display = "none";
+            }
+
+            if (results) {
+              results.style.display = "block";
+            }
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+
+          }
+        );
+
+      }
+
+    });
+
+  </script>
 
 </body>
-
 </html>
